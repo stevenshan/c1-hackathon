@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+    <form action="">
+        <div class="tabbable">
+            <ul class="nav nav-pills">
+                <li class="active"><a href="#tab1" data-toggle="tab">Information</a></li>
+                <li class=""><a href="#tab2" data-toggle="tab">Charity Interests</a></li>
+                <li class=""><a href="#tab3" data-toggle="tab">Other Information</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane" id="tab1">
+                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8 ">
+                            <p>
+                                Capital One is partnering with charities across the nation and in your local area. When you enable ROUNDED through your Capital
+                                One account, you are dedicating your spare change from every purchase to help a good cause.
+                            </p>
+                            <p>
+                                Here's how it works: say you make a purchase with your Capital One card. Immediately after the purchase, Capital One checks
+                                your bank account balance and automatically transfers the amount of change over a
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href="#tab2" data-toggle="tab" class="btn pull-right">Next</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab2">
+                    <p>Next form part</p>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href="#tab1" data-toggle="tab" class="btn pull-left">Prev</a>
+                            <a href="#tab3" data-toggle="tab" class="btn pull-right">Next</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab3">
+                    <p>Next form part</p>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href="#tab2" data-toggle="tab" class="btn pull-left">Prev</a>
+                            <a href="" data-toggle="tab" class="btn pull-right">Submit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{%- endblock %}
