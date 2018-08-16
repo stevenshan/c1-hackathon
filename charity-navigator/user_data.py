@@ -31,7 +31,8 @@ def write_current_suggestion(db, suggestion):
 def update_suggestion():
 	db = connect_to_db()
 	interests = get_interests(db)
-	suggestion = get_suggestions(interests)[0]
+	suggestions = [s for s in get_suggestions(interests) if not(s['websiteURL'] == 'null')]
+	suggestion = suggestions[0]
 	write_current_suggestion(db, suggestion)
 
 update_suggestion()
