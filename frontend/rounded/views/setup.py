@@ -49,6 +49,3 @@ charityCauses = ["Children's and Family Services",
 @controller.route("/setup", methods=["GET"])
 def setup():
     return flask.render_template("setup.html", charityCauses=charityCauses)
-
-
-def checkBoxes

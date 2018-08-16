@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_googlemaps import GoogleMaps
 
 # Database
 import flask_migrate
@@ -16,6 +17,8 @@ def create_app():
         static_url_path="/static",
         instance_relative_config=True
     )
+
+    GoogleMaps(app, key="AIzaSyADCxm6oxGCYP94Gq7igqtczUDycRvTbJU")
 
     # load configuration
     configMode = os.environ.get("app_configuration", "Config")
