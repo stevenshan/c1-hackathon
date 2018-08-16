@@ -1,6 +1,5 @@
 from . import controller
 import flask, json
-from flask_wtf import FlaskForm
 
 charityCauses = ["Children's and Family Services",
 'Homeless Services',

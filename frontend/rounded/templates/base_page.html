@@ -6,7 +6,7 @@
 <link href="{{ url_for('static', filename='styles/general.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block _body %}
+{% block body %}
 
 <div id="body-wrapper">
     <header>
@@ -53,6 +53,10 @@
         </div>
     </div>
 
+    <div id="body-container">
+        {% block _body %}
+        {% endblock %}
+    </div>
 </div>
 
 <footer>

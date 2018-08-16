@@ -29,6 +29,28 @@ General things
     background-position-y: -.375em;
     box-sizing: border-box;
 }
+
+.button {
+    padding: 10px;
+    background: #6b81f5;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-flex;
+    border-radius: 3px;
+}
+
+.button:hover {
+    background: #546ff7;
+}
+
+.submit {
+    background: #128020;
+}
+
+.submit:hover {
+    background: #0b7018;
+}
+
 /*
 ****************************************
 Page Setup
@@ -38,14 +60,18 @@ Page Setup
 #body-wrapper {
     min-height: 100%;
 
-    /* same height as footer */
-    margin-bottom: -180px;
+    /* height of footer - 25 */
+    margin-bottom: -155px;
 }
 
 #body-wrapper:after {
     content: "";
     display: block;
     height: 180px;
+}
+
+#body-container {
+    padding-top: 15px;
 }
 
 /*
@@ -289,8 +315,13 @@ footer #footer-disclosures #equalhousinglender .sprite {
 
 @media only screen and (max-width: 750px) {
 
+    #body-container {
+        padding-top: 85px;   
+    }
+
     header {
         position: fixed;
+        top: 0px;
         width: 100%;
         text-align: center;
         z-index: 1000;
@@ -375,7 +406,7 @@ footer #footer-disclosures #equalhousinglender .sprite {
     }
 
     #body-wrapper {
-        margin-bottom: -550px;
+        margin-bottom: -525px;
     }
 
     #body-wrapper:after {

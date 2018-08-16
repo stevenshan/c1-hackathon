@@ -1,0 +1,120 @@
+/*
+****************************************
+Input formatting
+****************************************
+*/
+
+.multistep-form .row-checkbox {
+    padding: 7px 0px;
+    padding-left: 30px; 
+    position: relative;
+}
+
+.multistep-form .row-checkbox label {
+    cursor: pointer;
+}
+
+.multistep-form .row-checkbox i.material-icons {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    margin: auto;
+}
+
+.multistep-form .row-checkbox i.material-icons {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.multistep-form .row-checkbox i.material-icons:after {
+    content: "check_box_outline_blank";
+}
+
+.multistep-form .row-checkbox input:checked + i.material-icons:after {
+    content: "check_box";
+}
+
+/*
+****************************************
+Form formatting
+****************************************
+*/
+
+.multistep-form .tab-nav-bar {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.multistep-form .tab-nav-bar .button {
+    margin-left: 10px;
+}
+
+.multistep-form .tab-nav-bar .button:first-child {
+    margin-left: 0px;
+}
+
+.multistep-form .tab-indicator {
+    margin-bottom: 15px;
+}
+
+.multistep-form .tab-indicator * {
+    display: inline-flex;
+    height: 30px;
+    line-height: 30px;
+    background: #65a7d9;
+    position: relative;
+    padding-right: 10px;
+    padding-left: 28px;
+}
+
+.multistep-form .tab-indicator *:before {
+    content: "";
+    display: inline-flex;
+    position: absolute;
+    right: -30px;
+    width: 0px;
+    height: 0px;
+    border: 15px solid transparent;
+    border-left: 15px solid #65a7d9;
+    z-index: 2;
+}
+
+.multistep-form .tab-indicator *:after {
+    content: "";
+    display: inline-flex;
+    top: -4px;
+    position: absolute;
+    right: -38px;
+    width: 0px;
+    height: 0px;
+    border: 19px solid transparent;
+    border-left: 19px solid white;
+    z-index: 1;
+}
+
+.multistep-form .tab-indicator *:last-child:after {
+    display: none;
+}
+
+.multistep-form .tab-indicator *:first-child {
+    padding-left: 10px;
+}
+
+.multistep-form .tab-table {
+    display: inline-grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;    
+}
+
+@media only screen and (max-width: 750px) {
+
+    .multistep-form .tab-table {
+        display: inline-grid;
+        width: 100%;
+        grid-template-columns: 1fr;    
+    }
+
+}
+
