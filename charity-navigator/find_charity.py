@@ -3,9 +3,11 @@ import json
 import pprint
 
 my_zip_code = "22102"
+my_city = "McLean"
+my_state = "VA"
 app_id = "267c5c0d"
 app_key = "95a6143616abcad971c5966409b0cb52"
-my_profile = {}
+
 
 # return list of dictionaries of charities in same zip code
 def get_local_charities(zip_code):
@@ -32,7 +34,7 @@ def get_categories():
 	r = requests.get(url, params=payload)
 	return r.json()
 
-# return dictionary of dictionaries for each cause from API
+# return dictionary of dictionaries for each cause (interest) from API
 def get_causes(categories):
 	causes = {}
 	for cat in categories:
@@ -40,6 +42,11 @@ def get_causes(categories):
 			causes[cause['causeName']] = cause
 	return causes
 
+# return list of possible interests for each user
+def get_possible_interests():
+	causes = get_causes(get_categories())
+	return list(['{:} : {:}'.format(c, causes[c]['image']) for c in causes.keys()])
+	#return list(causes.keys())
 
 # get list of suggestions based on location, interests
 def get_suggestions_by_zip(zip_code, interests):
@@ -95,6 +102,15 @@ def sort_by_ratings(charity_list):
 def get_ratings(charity_list):
 	return [c_dict['currentRating']['rating'] for c_dict in charity_list]
 
-pprint.pprint(get_names(sort_by_ratings(get_suggestions_by_zip(my_zip_code, ['Diseases, Disorders, and Disciplines', 'Medical Research']))))
-pprint.pprint(get_names(sort_by_ratings(get_suggestions_by_city('McLean', ['Diseases, Disorders, and Disciplines', 'Medical Research']))))
-pprint.pprint(get_names(sort_by_ratings(get_suggestions_by_state('VA', ['Diseases, Disorders, and Disciplines', 'Medical Research']))))
+# get suggestions based on location radius and interests
+def get_suggestions(interests, radius='state'):
+	if radius=='zip_code':
+		return sort_by_ratings(get_suggestions_by_zip(my_zip_code, interests))
+	if radius=='city':
+		return sort_by_ratings(get_suggestions_by_city(my_city, interests))
+	return sort_by_ratings(get_suggestions_by_state(my_state, interests))
+
+
+pprint.pprint(get_possible_interests())
+#pprint.pprint(get_names(get_suggestions(get_possible_interests()[:2])))
+#pprint.pprint(get_suggestions(interests)[0])
