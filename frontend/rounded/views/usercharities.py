@@ -2,6 +2,19 @@ from . import controller
 import flask, json
 from flask_googlemaps import Map
 
+# this will be filtered out later if needed
+charities = ["Children's and Family Services",
+'Homeless Services',
+'Youth Development, Shelter, and Crisis Services',
+'Food Banks, Food Pantries, and Food Distribution',
+'Social Services',
+'Multipurpose Human Service Organizations',
+'Scholarship and Financial Support',
+'Private Liberal Arts Colleges',
+'Youth Education Programs and Services',
+'Education Policy and Reform',
+'Social and Public Policy Research']
+
 @controller.route("/user-charities", methods=["GET"])
 def userCharities():
     map = Map(
@@ -11,4 +24,6 @@ def userCharities():
         style="height:500px;width:100%;",
         markers=[(37.4419, -122.1419)] # replace with actual markers of locations later on
     )
-    return flask.render_template("usercharities.html", map=map)
+    return flask.render_template("usercharities.html", map=map, charities=charities)
+
+# for all of a user's charity interests, get a list of charities and display as a list

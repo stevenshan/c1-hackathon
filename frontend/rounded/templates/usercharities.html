@@ -11,8 +11,15 @@ endblock %} {% block _body %}
                 {{map.html}}
             </div>
         </div>
-        <div class="col-sm-6 charities-list">
-
+        <div class="col-sm-6">
+            <div class="map-title">
+                <h1>Charities You Might Like</h1>
+            </div>
+            <ul class="list-group list-group-flush charities-container">
+                {% for charity in charities %}
+                <li class="list-group-item">{{charity}}</li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </div>
