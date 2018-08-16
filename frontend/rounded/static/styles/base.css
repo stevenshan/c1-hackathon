@@ -1,0 +1,35 @@
+html, body {
+    padding: 0px;
+    margin: 0px;
+    font-family: Optimist, Arial, Helvetica, sans-serif;
+}
+
+/*
+Fonts from Capital One's website
+*/
+
+@font-face{
+    font-family:Optimist;
+    font-weight:400;
+    src:url(https://www.capitalone.com/assets/enterprise/fonts/Optimist_W_Rg.eot?#iefix);
+    src:url(https://www.capitalone.com/assets/enterprise/fonts/Optimist_W_Rg.eot?#iefix) format("eot"),url(https://www.capitalone.com/assets/enterprise/fonts/Optimist_W_Rg.woff2) format("woff2"),url(https://www.capitalone.com/assets/enterprise/fonts/Optimist_W_Rg.woff) format("woff")
+}
+@font-face{
+    font-family:"Optimist Bold";
+    font-weight:400;
+    src:url(https://www.capitalone.com/assets/enterprise/fonts/Optimist_W_SBd.eot?#iefix);
+    src:url(https://www.capitalone.com/assets/enterprise/fonts/Optimist_W_SBd.eot?#iefix) format("eot"),url(https://www.capitalone.com/assets/enterprise/fonts/Optimist_W_SBd.woff2) format("woff2"),url(https://www.capitalone.com/assets/enterprise/fonts/Optimist_W_SBd.woff) format("woff")
+}
+@font-face{
+    font-family:"Optimist Light";
+    font-weight:400;
+    font-style:normal;
+    src:url(https://www.capitalone.com/assets/enterprise/fonts/Optimist_W_Lt.eot);
+    src:url(https://www.capitalone.com/assets/enterprise/fonts/Optimist_W_Lt.eot?#iefix) format("embedded-opentype"),url(https://www.capitalone.com/assets/enterprise/fonts/Optimist_W_Lt.woff2) format("woff2"),url(https://www.capitalone.com/assets/enterprise/fonts/Optimist_W_Lt.woff) format("woff")
+}
+@font-face{
+    font-family:Streamline;
+    font-weight:400;
+    src:url(/assets/compass/fonts/streamline.eot?#iefix);
+    src:url(/assets/compass/fonts/streamline.eot?#iefix) format("eot"),url(/assets/compass/fonts/streamline.woff2) format("woff2"),url(/assets/compass/fonts/streamline.woff) format("woff"),url(/assets/compass/fonts/streamline.ttf) format("truetype"),url(/assets/compass/fonts/streamline.svg#streamline) format("svg")
+}
