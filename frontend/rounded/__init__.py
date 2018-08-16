@@ -33,7 +33,11 @@ def create_app():
         # default app related views
         from rounded.views.controller import views
 
+        # import other blueprints
+        from rounded.mod_voting.controller import mod_voting
+
         # register controller blueprinters
         app.register_blueprint(views)
+        app.register_blueprint(mod_voting, url_prefix="/voting")
 
     return app
