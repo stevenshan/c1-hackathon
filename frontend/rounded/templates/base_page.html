@@ -11,19 +11,48 @@
 <div id="body-wrapper">
     <header>
         <div class="center-container">
-            <img
-                alt="Capital One"
-                src="{{ url_for('static', filename='imgs/Capital_One_logo.svg') }}"
-                id="main-logo" 
-            >
+            <a>
+                <img
+                    alt="Capital One"
+                    src="{{ url_for('static', filename='imgs/Capital_One_logo.svg') }}"
+                    id="main-logo" 
+                >
+            </a>
 
             <ul class="nav-bar">
-                <li>
-                    <a id="signin-link" class="icon">Sign In</a>
-                </li>
+                <a href="test">
+                    <li class="mobile-visible">
+                        <span href="test" id="signin-link" class="icon">Sign In</span>
+                    </li>
+                </a>
+            </ul>
+
+            <ul class="nav-bar left">
+                <label for="showMenuToggle">
+                    <li class="mobile-visible">
+                        <span id="menu-link" class="icon">Menu</span>
+                    </li>
+                </label>
             </ul>
         </div>
     </header>
+    <input id="showMenuToggle" type="checkbox" class="hidden">
+    <div id="header-nav">
+        <div class="center-container">
+            <ul class="nav-bar">
+                <li>
+                    <a>test 1</a>
+                </li>
+                <li>
+                    <a>test 2</a>
+                </li>
+                <li>
+                    <a>test 3</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
 </div>
 
 <footer>
@@ -57,7 +86,7 @@
                         <a>Terms & Conditions</a>
                     </li> 
                     <li>
-                        <a>Accessbility</a>
+                        <a>Accessibility</a>
                     </li> 
                 </ul> 
             </div>

@@ -9,6 +9,13 @@ html, body {
     color: #001729;
 }
 
+.hidden { display: none; }
+
+* {
+    text-decoration: initial;
+    outline: none;
+}
+
 /*
 Fonts from Capital One's website
 */
