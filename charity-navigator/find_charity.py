@@ -45,8 +45,7 @@ def get_causes(categories):
 # return list of possible interests for each user
 def get_possible_interests():
 	causes = get_causes(get_categories())
-	return list(['{:} : {:}'.format(c, causes[c]['image']) for c in causes.keys()])
-	#return list(causes.keys())
+	return list(causes.keys())
 
 # get list of suggestions based on location, interests
 def get_suggestions_by_zip(zip_code, interests):
@@ -111,6 +110,6 @@ def get_suggestions(interests, radius='state'):
 	return sort_by_ratings(get_suggestions_by_state(my_state, interests))
 
 
-pprint.pprint(get_possible_interests())
+#pprint.pprint(get_possible_interests())
 #pprint.pprint(get_names(get_suggestions(get_possible_interests()[:2])))
-#pprint.pprint(get_suggestions(interests)[0])
+#pprint.pprint(get_suggestions(get_possible_interests()[:1])[0])
