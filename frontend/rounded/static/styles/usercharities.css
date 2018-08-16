@@ -1,7 +1,11 @@
-.map-column {
-    margin: 10px;
+h1 {
+    text-align: center;
 }
 
 .map-container {
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+}
+
+.charities-container {
     box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
 }

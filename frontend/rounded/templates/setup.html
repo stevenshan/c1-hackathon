@@ -11,9 +11,8 @@
     <form action="" method="post" role="form" novalidate></form>
         <div class="tabbable">
             <ul class="nav nav-pills">
-                <li style="width: 33%" class=""><a href="#tab1" data-toggle="tab">Information</a></li>
-                <li style="width: 33%" class=""><a href="#tab2" data-toggle="tab">Charity Interests</a></li>
-                <li style="width: 33%" class=""><a href="#tab3" data-toggle="tab">Other Information</a></li>
+                <li style="width: 48%" class=""><a href="#tab1" data-toggle="tab">Information</a></li>
+                <li style="width: 48%" class=""><a href="#tab2" data-toggle="tab">Charity Interests</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane" id="tab1">
@@ -32,7 +31,8 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <a href="#tab2" data-toggle="tab" class="btn pull-right tab2anchor">Next</a>
+                            <a data-toggle="tab" class="btn pull-left">Back</a>
+                            <a href="#tab2" data-toggle="tab" class="btn pull-right">Next</a>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                         <div class="col-sm-3">
                             {%- for cause in causes -%}
                             <div class="checkbox">
-                                <label><input type="checkbox" value="">{{cause}}</label>
+                                <label><input name="cause[]" type="checkbox" value="">{{cause}}</label>
                             </div>
                             {%- endfor -%}
                         </div>
@@ -51,16 +51,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <a href="#tab1" data-toggle="tab" class="btn pull-left">Prev</a>
-                            <a href="#tab3" data-toggle="tab" class="btn pull-right">Next</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="tab3">
-                    <p>Next form part</p>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <a href="#tab2" data-toggle="tab" class="btn pull-left">Prev</a>
-                            <a href="" data-toggle="tab" class="btn pull-right">Submit</a>
+                            <a data-toggle="tab" class="btn pull-right">Submit</a>
                         </div>
                     </div>
                 </div>
