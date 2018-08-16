@@ -147,7 +147,6 @@ def add_charity_balance(key, client):
     amount = get_account_balance(key, client)
 
     if (0.001 < amount and amount != 1.0):
-        print amount
         # withdraw money from main account
         withdraw_from_balance(key, amount, "5b75bbddf0cec56abfa436a6")
 

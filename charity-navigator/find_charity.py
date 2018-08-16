@@ -1,12 +1,86 @@
 import requests
 import json
 import pprint
+import sys
+sys.path.append("../")
+from user_info.accounts import *
 
-my_zip_code = "22102"
-my_city = "McLean"
-my_state = "VA"
+global my_zip_code
+global my_city
+global my_state
 app_id = "267c5c0d"
 app_key = "95a6143616abcad971c5966409b0cb52"
+
+
+def state_name_to_postal_code(state):
+	state_dict = {
+    'Alabama': 'AL',
+    'Alaska': 'AK',
+    'Arizona': 'AZ',
+    'Arkansas': 'AR',
+    'California': 'CA',
+    'Colorado': 'CO',
+    'Connecticut': 'CT',
+    'Delaware': 'DE',
+    'Florida': 'FL',
+    'Georgia': 'GA',
+    'Hawaii': 'HI',
+    'Idaho': 'ID',
+    'Illinois': 'IL',
+    'Indiana': 'IN',
+    'Iowa': 'IA',
+    'Kansas': 'KS',
+    'Kentucky': 'KY',
+    'Louisiana': 'LA',
+    'Maine': 'ME',
+    'Maryland': 'MD',
+    'Massachusetts': 'MA',
+    'Michigan': 'MI',
+    'Minnesota': 'MN',
+    'Mississippi': 'MS',
+    'Missouri': 'MO',
+    'Montana': 'MT',
+    'Nebraska': 'NE',
+    'Nevada': 'NV',
+    'New Hampshire': 'NH',
+    'New Jersey': 'NJ',
+    'New Mexico': 'NM',
+    'New York': 'NY',
+    'North Carolina': 'NC',
+    'North Dakota': 'ND',
+    'Ohio': 'OH',
+    'Oklahoma': 'OK',
+    'Oregon': 'OR',
+    'Pennsylvania': 'PA',
+    'Rhode Island': 'RI',
+    'South Carolina': 'SC',
+    'South Dakota': 'SD',
+    'Tennessee': 'TN',
+    'Texas': 'TX',
+    'Utah': 'UT',
+    'Vermont': 'VT',
+    'Virginia': 'VA',
+    'Washington': 'WA',
+    'West Virginia': 'WV',
+    'Wisconsin': 'WI',
+    'Wyoming': 'WY',
+	}
+	return state_dict[state]
+
+def get_location():
+	global my_zip_code
+	global my_city
+	global my_state
+
+	nessie_API_key = "5843532b7d4678ebf648c08c09c61d81"
+	customers = get_customers(nessie_API_key)
+	customers_id = get_customers_id(customers, "Jamey's Account")
+	client = make_client(nessie_API_key, customers_id)
+
+	my_zip_code = client.zip
+	my_city = client.city
+	my_state = state_name_to_postal_code(client.state)
+
 
 
 # return list of dictionaries of charities in same zip code
@@ -103,6 +177,7 @@ def get_ratings(charity_list):
 
 # get suggestions based on location radius and interests
 def get_suggestions(interests, radius='state'):
+	get_location()
 	if radius=='zip_code':
 		return sort_by_ratings(get_suggestions_by_zip(my_zip_code, interests))
 	if radius=='city':
@@ -110,6 +185,8 @@ def get_suggestions(interests, radius='state'):
 	return sort_by_ratings(get_suggestions_by_state(my_state, interests))
 
 
+
 #pprint.pprint(get_possible_interests())
 #pprint.pprint(get_names(get_suggestions(get_possible_interests()[:2])))
-#pprint.pprint(get_suggestions(get_possible_interests()[:1])[0])
+#interests = get_possible_interests()
+#pprint.pprint(get_names(get_suggestions(interests)))
