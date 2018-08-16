@@ -11,6 +11,7 @@ General things
     left: 0px;
     right: 0px;
     margin: auto;
+    position: relative;
 }
 
 /* element with small icon indicator in front */
@@ -56,8 +57,8 @@ Header bar at top of page
 header {
     height: 70px;
     line-height: 70px;
-    border-bottom: 1px solid #dcd8db;
     position: relative;
+    background: #ffffff;
 }
 
 header #main-logo {
@@ -73,7 +74,13 @@ header .nav-bar {
     float: right;
 }
 
+header .nav-bar.left {
+    float: left;
+    display: none;
+}
+
 header .nav-bar li {
+    text-align: center;
     cursor: pointer;
 }
 
@@ -89,9 +96,51 @@ header .nav-bar #signin-link:before {
     background-position-y: -4.875em;
 }
 
+header .nav-bar #menu-link:before {
+    background-size: 36px;
+    background-position: -6px -42px;
+}
+
 /*
 ---------------------------------------
-Header bar at top of page
+Main navigation bar under header
+---------------------------------------
+*/
+
+#header-nav {
+    background: #37404e;
+}
+
+#header-nav .nav-bar {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+#header-nav .nav-bar:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+#header-nav .nav-bar li {
+    float: left;
+    line-height: 50px;
+    color: #ffffff;
+}
+
+#header-nav .nav-bar li a {
+    padding: 0px 15px;
+    cursor: pointer;
+}
+
+#header-nav .nav-bar li:hover {
+    background: #606a77;
+}
+
+/*
+---------------------------------------
+Footer at bottom
 ---------------------------------------
 */
 
@@ -239,6 +288,91 @@ footer #footer-disclosures #equalhousinglender .sprite {
 }
 
 @media only screen and (max-width: 750px) {
+
+    header {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+        border-bottom: 1px solid #dcd8db;
+    }
+
+    header #main-logo {
+        height: 38px;
+    }
+
+    header .nav-bar {
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        right: 0px;
+        margin: auto;
+        height: 42px;
+    }
+
+    header .nav-bar.left {
+        display: block;
+        left: 0px;
+        right: initial;
+    }
+
+    header .nav-bar.left li {
+        text-decoration: initial !important;
+    }
+
+    #header-nav {
+        display: none;
+        position: fixed;
+        left: 0px;
+        right: 0px;
+        top: 70px;
+        bottom: 0px;
+        z-index: 1000;
+        background: #e2e2e2;
+    }
+
+    #showMenuToggle:checked + #header-nav {
+        display: block;
+    }
+
+    #header-nav .nav-bar li {
+        display: block;
+        color: #303030;
+        float: none;
+    }
+
+    #header-nav .nav-bar li a {
+        line-height: 80px;
+        height: 80px;
+        display: block;
+        padding: 0px;
+    }
+
+    #header-nav .nav-bar li:hover {
+        background: transparent;
+    }
+
+    header .nav-bar li {
+        display: none;
+        font-size: 0.8em;
+    }
+
+    header .nav-bar li.mobile-visible {
+        display: block;
+        line-height: initial;
+    }
+
+    header .nav-bar .icon {
+        line-height: initial;
+    }
+
+    header .nav-bar .icon:before {
+        left: 0px;
+        right: 0px;
+        margin: auto;
+        display: block;
+        font-size: 1.3em;
+    }
 
     #body-wrapper {
         margin-bottom: -550px;
