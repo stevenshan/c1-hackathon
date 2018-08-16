@@ -1,5 +1,6 @@
 from . import controller
-import flask
+import flask, json
+from flask_wtf import FlaskForm
 
 charityCauses = ["Children's and Family Services",
 'Homeless Services',
@@ -45,6 +46,9 @@ charityCauses = ["Children's and Family Services",
 'Non-Medical Science & Technology Research',
 'Social and Public Policy Research']
 
-@controller.route("/charity-account-setup", methods=["GET"])
-def homepage():
-    return flask.render_template("setup-modal.html")
+@controller.route("/setup", methods=["GET"])
+def setup():
+    return flask.render_template("setup.html", charityCauses=charityCauses)
+
+
+def checkBoxes

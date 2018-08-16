@@ -10,4 +10,5 @@ from . import controller
 #######################################
 
 from . import homepage
+from . import setup
 
