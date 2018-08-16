@@ -41,7 +41,7 @@ def get_causes(categories):
 
 
 # get suggestions based on location, interests, ratings
-def get_suggestions(zip_code, interests):
+def get_suggestions_by_zip(zip_code, interests):
 	causes = get_causes(get_categories())
 	results = {}
 	for interest in interests:
@@ -55,9 +55,40 @@ def get_suggestions(zip_code, interests):
 				results[org['charityName']] = org
 	return results
 
+# get suggestions based on location, interests, ratings
+def get_suggestions_by_city(city, interests):
+	causes = get_causes(get_categories())
+	results = {}
+	for interest in interests:
+		cause_id = causes[interest]['causeID']
+		payload = {"app_id": app_id, "app_key": app_key, "city": city, "causeID": cause_id, "rating": "RATING: DESC"}
+		url = "https://api.data.charitynavigator.org/v2/Organizations"
+		r = requests.get(url, params=payload)
+		result = r.json()
+		for org in result:
+			if not('errorMessage' in org.keys()):
+				results[org['charityName']] = org
+	return results
+
+# get suggestions based on location, interests, ratings
+def get_suggestions_by_state(state, interests):
+	causes = get_causes(get_categories())
+	results = {}
+	for interest in interests:
+		cause_id = causes[interest]['causeID']
+		payload = {"app_id": app_id, "app_key": app_key, "state": state, "causeID": cause_id, "rating": "RATING: DESC"}
+		url = "https://api.data.charitynavigator.org/v2/Organizations"
+		r = requests.get(url, params=payload)
+		result = r.json()
+		for org in result:
+			if not('errorMessage' in org.keys()):
+				results[org['charityName']] = org
+	return results
 
 
 def get_ratings(charities):
 	return [c_dict['currentRating']['rating'] for c_dict in charity_list.values()]
 
-pprint.pprint(get_names(get_suggestions(my_zip_code, ['Diseases, Disorders, and Disciplines', 'Medical Research'])))
+pprint.pprint(get_names(get_suggestions_by_zip(my_zip_code, ['Diseases, Disorders, and Disciplines', 'Medical Research'])))
+pprint.pprint(get_names(get_suggestions_by_city('McLean', ['Diseases, Disorders, and Disciplines', 'Medical Research'])))
+pprint.pprint(get_names(get_suggestions_by_state('VA', ['Diseases, Disorders, and Disciplines', 'Medical Research'])))
