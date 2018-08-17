@@ -27,3 +27,11 @@ def getDB():
 
     return db_client
 
+def get_interests(db):
+    user_ref = db.collection(u'users').document(u'johnpaul')
+    return user_ref.get().to_dict().get("interests", [])
+
+def change_interests(db, listOfInterests):
+    user_ref = db.collection(u'users').document(u'johnpaul')
+    data = {u'interests':listOfInterests}
+    user_ref.update(data)

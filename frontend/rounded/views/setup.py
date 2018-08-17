@@ -1,50 +1,31 @@
 from . import controller
+from rounded.core import firebase
 import flask, json
-
-charityCauses = ["Children's and Family Services",
-'Homeless Services',
-'Youth Development, Shelter, and Crisis Services',
-'Food Banks, Food Pantries, and Food Distribution',
-'Social Services',
-'Multipurpose Human Service Organizations',
-'Scholarship and Financial Support',
-'Private Liberal Arts Colleges',
-'Youth Education Programs and Services',
-'Education Policy and Reform',
-'Special Education',
-'Adult Education Programs and Services',
-'Other Education Programs and Services',
-'Private Elementary and Secondary Schools',
-'Universities, Graduate Schools, and Technological Institutes',
-'Early Childhood Programs and Services',
-'International Peace, Security, and Affairs',
-'Development and Relief Services',
-'Humanitarian Relief Supplies',
-'Foreign Charity Support Organizations',
-'Advocacy and Education',
-'Religious Media and Broadcasting',
-'Religious Activities',
-'Zoos and Aquariums',
-'Wildlife Conservation',
-'Animal Rights, Welfare, and Services',
-'Libraries, Historical Societies and Landmark Preservation',
-'Museums',
-'Public Broadcasting and Media', 
-'Performing Arts', 
-'Botanical Gardens, Parks, and Nature Centers',
-'Environmental Protection and Conservation',
-'Patient and Family Support',
-'Diseases, Disorders, and Disciplines',
-'Treatment and Prevention Services',
-'Medical Research',
-'Community Foundations',
-'United Ways',
-'Jewish Federations',
-'Fundraising',
-'Housing and Neighborhood Development',
-'Non-Medical Science & Technology Research',
-'Social and Public Policy Research']
+from rounded.core import charity_causes
+import base64
 
 @controller.route("/setup", methods=["GET"])
 def setup():
-    return flask.render_template("setup.html", charityCauses=charityCauses)
+    db = firebase.getDB()
+    interests = firebase.get_interests(db)
+    causes = [{
+        "name": x,
+        "value": base64.b64encode(x.encode("utf8")).decode("utf8"),
+        "active": (x in interests),
+    } for x in charity_causes.CAUSES]
+    return flask.render_template("setup.html", causes=causes)
+
+@controller.route("/setup", methods=["POST"])
+def _setup():
+    causes = flask.request.form.getlist("cause[]")
+
+    def decode(x):
+        return base64.b64decode(str(x).encode("utf8")).decode("utf8")
+
+    causes = [decode(x) for x in causes]
+
+    db = firebase.getDB()
+
+    firebase.change_interests(db, causes)
+
+    return flask.redirect(flask.url_for("app.setup"))
