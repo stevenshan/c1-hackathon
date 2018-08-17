@@ -3,7 +3,23 @@ from firebase_admin import credentials
 from firebase_admin import firestore 
 import os
 
+def getDB():
+    try:
+        db_client = firestore.client()
+    except Exception as e:
+        raise ValueError("Error connecting to Firebase: " + str(e))
+
+    return db_client
+
 def connect():
+    try:
+        temp = getDB()
+        if temp == None:
+            raise ValueError("")
+        return
+    except:
+        pass
+
     CERT_FILE = 'firebase_key.json'
     path = os.path.join(
         os.getcwd(),
@@ -18,14 +34,6 @@ def connect():
             'projectId': 'firestoresample-9aa84',
         },
     )
-
-def getDB():
-    try:
-        db_client = firestore.client()
-    except Exception as e:
-        return "Error connecting to Firebase: " + str(e)
-
-    return db_client
 
 def get_interests(db):
     user_ref = db.collection(u'users').document(u'johnpaul')

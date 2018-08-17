@@ -10,10 +10,12 @@
 
 {% block _body %}
 <div class="center-container">
+    {% if not hasCharity %}
     <div id="charity-banner">
         <h2>Try the new C1 Rounded</h2>
         <a class="button" href="/setup">Let's Go</a>
     </div>
+    {% endif %}
     <div id="account-container">
         {% for account in accounts %}
         <div class="account-card">

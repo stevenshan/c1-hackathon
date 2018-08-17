@@ -201,14 +201,6 @@ def get_charity_location(charity_name):
 	result = r.json()[0]
 	return result['mailingAddress']
 
-
-#pprint.pprint(get_possible_interests())
-#pprint.pprint(get_names(get_suggestions(get_possible_interests()[:2])))
-#interests = get_possible_interests()
-#pprint.pprint(get_names(get_suggestions(interests)))
-
-
-
 def output_all():
 	print('finding all charities')
 

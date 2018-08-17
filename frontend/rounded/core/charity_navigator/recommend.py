@@ -1,3 +1,4 @@
+import recombee_api_client
 from recombee_api_client.api_client import RecombeeClient
 from recombee_api_client.api_requests import *
 from .find_charity import *
@@ -74,12 +75,20 @@ def add_donation(user, charity_navigator_url):
 	client.send(r)
 
 def get_recommendations(user, db):
-	recommended = client.send(RecommendItemsToUser(user, num_recs, min_relevance='medium'))
-	ids = []
-	for rec in recommended['recomms']:
-	 	ids.append(rec['id'])
-	recommended_list = ids
+	flag = False
+	try:
+		recommended = client.send(RecommendItemsToUser(user, num_recs, min_relevance='medium'))
+	except recombee_api_client.exceptions.ApiTimeoutException as e:
+		flag = True
+	else:
+		ids = []
+		for rec in recommended['recomms']:
+		 	ids.append(rec['id'])
+		recommended_list = ids
+
 	hard_coded_suggestions = access_suggestions(db)
+	if flag:
+		recommended_list = hard_coded_suggestions
 	return (recommended_list, hard_coded_suggestions)
 
 def add_rejection(user, item):
@@ -103,7 +112,6 @@ def get_sorted_recommendations(user, db):
 	(recommended_list, hard_coded_suggestions) = get_recommendations(user, db)
 	sorted_list = sorted(recommended_list+hard_coded_suggestions, 
 		key = lambda item_id: (get_index_in_ML_list(recommended_list, item_id) + get_index_in_hard_coded_list(hard_coded_suggestions, item_id))/2, reverse=True)[:num_recs]
-	print(sorted_list)
 	return [{'charityName': all_charity_data[item_id]['charityName'], 'mission': all_charity_data[item_id]['mission']} 
 		for item_id in sorted_list 
 		if item_id in all_charity_data.keys()]

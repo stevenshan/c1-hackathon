@@ -5,6 +5,7 @@ from rounded.core import charity_causes
 from rounded.core.charity_navigator import recommend, find_charity, user_data
 from rounded.core.user_info import accounts
 import requests
+from multiprocessing import Pool
 
 @controller.route("/user-charities", methods=["GET"])
 def userCharities():
@@ -17,23 +18,34 @@ def userCharities():
 	charitiesByLocation = find_charity.get_suggestions_by_city(client.city)
 	charityMarkers = []
 
-	for charity in charitiesByLocation:
-		mailingAddress = charity['mailingAddress']
-		charityMarkers.append(tuple((convertAddressToLatLong(mailingAddress)).values()))
-
-	charityMarkers = [c for c in charityMarkers[:5] if len(list(c)) >= 2]
-	print(charityMarkers)
+	# charityMarkers = [charityMarker(charity) for charity in charitiesByLocation[:2]]
+	pool = Pool(processes=4)
+	charityMarkers = pool.map(charityMarker, charitiesByLocation[:10],2)
+	charityMarkers = [x for x in charityMarkers if x != None]
 	map = Map(
     	identifier="view-side",
-    	lat=34.9048814,#charityMarkers[0][0],
-    	lng=-77.23134360000002,#charityMarkers[0][1],
+    	lat=38.64181689999999,
+    	lng=-83.7657646,
 		style="height:500px;width:100%;",
-		markers=[(34.9048814, -77.23134360000002)] # replace with actual markers of locations later on
+		zoom=12,
+		# fit_markers_to_bounds=True,
+		markers=charityMarkers,
 	)
 
 
 	causes = recommend.write_final_rec('user1')
 	return flask.render_template("usercharities.html", map=map, causes=causes)
+
+def charityMarker(charity):
+	mailingAddress = charity['mailingAddress']
+	coords = convertAddressToLatLong(mailingAddress)
+	if len(coords) >= 2:
+		coords.update({
+			"infobox": str(charity["charityName"])
+		})
+		return coords
+
+	return None
 
 def convertAddressToLatLong(address):
 	url = "https://maps.googleapis.com/maps/api/geocode/json"
@@ -49,8 +61,6 @@ def convertAddressToLatLong(address):
 
 	response = requests.request("GET", url, headers=headers, params=querystring)
 	response = json.loads(response.text)
-	# print(json.dumps(response, indent=2))
-	#print(response['results'][0]['geometry'])
 	if len(response['results'])>0:
 		return response['results'][0]['geometry']['location'];
 	return {}
