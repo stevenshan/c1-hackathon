@@ -4,5 +4,5 @@ import flask
 
 @controller.route("/", methods=["GET"])
 def homepage():
-    return url_tools.render_template("base_page.html")
+    return flask.redirect(flask.url_for("app.setup"))
 
