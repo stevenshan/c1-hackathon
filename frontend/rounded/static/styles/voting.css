@@ -4,11 +4,6 @@
     padding: 5px;
 }
 
-.selected-charity {
-    box-shadow: 0 0 5px rgba(208, 48, 39, 0.2);
-    border: 1px solid rgba(208, 48, 39, 0.2);
-}
-
 .title-bar {
     display: flex;
     align-items: center;
@@ -89,6 +84,11 @@ h3, h4 {
     text-align: center;
 }
 
-.list-group input:checked + label {
-    background: blue;
+ul {
+    list-style: none;
+}
+
+.list-item-charity input:checked + label {
+    box-shadow: 0 0 5px rgba(208, 48, 39, 0.2);
+    border: 1px solid rgba(208, 48, 39, 0.2);
 }
