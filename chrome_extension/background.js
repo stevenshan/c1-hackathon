@@ -50,7 +50,8 @@ if (document.title == "Amazon.com Shopping Cart") {
    var pic = chrome.runtime.getURL('coins.png');
 
    document.getElementById("modal").setAttribute("Style", "display:block; position:fixed; z-index:1; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgb(0,0,0); background-color:rgba(0,0,0,0.4);");
-   document.getElementById("modal-content").setAttribute("Style", "text-align:center; height:500px; color:#25ba27; background-color:#fefefe; margin:15% auto; padding:20px; border:1px solid #888; width:30%; background-image:url('chrome-extension://gdcgcmkejocjbkjeeidinoiijhjkohbd/coins.png');");
+   var coinsImgPath = chrome.extension.getURL("coins.png");
+   document.getElementById("modal-content").setAttribute("Style", "text-align:center; height:500px; color:#25ba27; background-color:#fefefe; margin:15% auto; padding:20px; border:1px solid #888; width:30%; background-image:url('" + coinsImgPath + "');");
    document.getElementById("close").setAttribute("Style", "color: #aaa; float:right; font-size:28px; font-weight:bold;");
    document.getElementById("modal").appendChild(style);
 

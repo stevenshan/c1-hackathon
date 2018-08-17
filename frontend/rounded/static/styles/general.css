@@ -156,7 +156,7 @@ Main navigation bar under header
     color: #ffffff !important;
 }
 
-#header-nav .nav-bar li a {
+#header-nav .nav-bar li {
     padding: 0px 15px;
     cursor: pointer;
     color: white;

@@ -37,16 +37,24 @@ def vote():
 def _vote():
     form = flask.request.form
 
-    votedFor = form.get("selectedCharity") 
-    db_client = firebase.getDB()
+    type_ = form.get("submitType")
 
-    if votedFor != None:
-        voting_db.increment_charity(db_client, votedFor)
+    if type_ == "vote":
+        votedFor = form.get("selectedCharity") 
+        db_client = firebase.getDB()
+
+        if votedFor != None:
+            voting_db.increment_charity(db_client, votedFor)
+    elif type_ == "tweet":
+        tweet()
 
     return flask.redirect(flask.url_for("mod_voting.vote"))
 
+
 def tweet():
+    print('tweet')
     form = flask.request.form
     votedFor = form.get("selectedCharity")
     if votedFor != None:
         tweeting.tweetVoteMessage(votedFor)
+        flask.flash("You just tweeted for your voted charity!")

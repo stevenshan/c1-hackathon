@@ -1,9 +1,7 @@
 $(function(){
     var charities = $(".charity-select");
 
-    function change(elem){
-        var self = elem == undefined ? $(this) : elem;
-        console.log(self);
+    function change(self){
         var enum_ = self.attr("enum");
 
         if (enum_ == undefined) {
@@ -21,7 +19,9 @@ $(function(){
         $("#selected-charity-desc").html(desc);
     }
 
-    charities.change(change);
+    charities.change(function(){
+        change($(this));
+    });
 
     var first = $(charities.first());
     change(first);
