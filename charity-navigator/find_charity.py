@@ -196,6 +196,13 @@ def get_charity_name_and_url(charity_name):
 	return (result['charityName'], website)
 
 
+def get_charity_location(charity_name):
+	payload = {"app_id": app_id, "app_key": app_key, "search": charity_name, "searchType": "NAME_ONLY", "sort": "RELEVANCE"}
+	url = "https://api.data.charitynavigator.org/v2/Organizations"
+	r = requests.get(url, params=payload)
+	result = r.json()[0]
+	return result['mailingAddress']
+
 
 #pprint.pprint(get_possible_interests())
 #pprint.pprint(get_names(get_suggestions(get_possible_interests()[:2])))
@@ -222,12 +229,21 @@ def output_all():
 	final_results = {}
 	#for id in all_results.keys():
 	#	org = all_results[id]
+	print('making final_results')
 	for org_name in results.keys():
 		org = results[org_name]
 		if not(type(org) is str) and not('errorMessage' in org.keys()):
 			if 'cause' in org.keys():
-				final_results[org['ein']] = {'charityName': org['charityName'],
+				if 'mission' in org.keys():
+					final_results[org['ein']] = {'charityName': org['charityName'],
 											'cause': org['cause']['causeID'],
 											'rating': org['currentRating']['rating'],
-											'state': org['mailingAddress']['stateOrProvince']}
+											'state': org['mailingAddress']['stateOrProvince'],
+											'mission': org['mission']}
+				else:
+					final_results[org['ein']] = {'charityName': org['charityName'],
+											'cause': org['cause']['causeID'],
+											'rating': org['currentRating']['rating'],
+											'state': org['mailingAddress']['stateOrProvince'],
+											'mission': 'null'}
 	return final_results

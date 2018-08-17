@@ -2,7 +2,7 @@ from recombee_api_client.api_client import RecombeeClient
 from recombee_api_client.api_requests import *
 from find_charity import *
 from user_data import *
-import json
+import ujson
 
 num_recs = 10
 user = 'user1'
@@ -18,13 +18,14 @@ global all_charity_data
 
 def output_dict():
 	all_charity_data = output_all()
+	print('done getting charities')
 	with open('data.json', 'w+') as outfile:
-		json.dump(all_charity_data, outfile)
+		ujson.dump(all_charity_data, outfile)
 
 def get_dict():
 	global all_charity_data
 	with open('data.json', 'r') as infile:
-		all_charity_data = json.load(infile)
+		all_charity_data = ujson.load(infile)
 
 
 def add_items():
@@ -72,22 +73,19 @@ def get_index_in_hard_coded_list(hard_coded_suggestions, item_id):
 		return num_recs
 
 def sort_recommendations(user):
+	get_dict()
 	(recommended_list, hard_coded_suggestions) = get_recommendations(user)
 	sorted_list = sorted(recommended_list+hard_coded_suggestions, 
 		key = lambda item_id: (get_index_in_ML_list(recommended_list, item_id) + get_index_in_hard_coded_list(hard_coded_suggestions, item_id))/2, reverse=True)[:num_recs]
 	print(sorted_list)
-	return [{'charityName': all_charity_data[item_id]['charityName'], 'mission': all_charity_data[item_id]['mission']} for item_id in sorted_list if item_id in all_charity_data]
+	return [{'charityName': all_charity_data[item_id]['charityName'], 'mission': all_charity_data[item_id]['mission']} 
+	for item_id in sorted_list 
+	if item_id in all_charity_data.keys()]
 
-get_dict()
+
+
 print(sort_recommendations('user1'))
 
-#add_items()
-# add_donation(user, '201612161')
-# recs = get_recommendations('user1')
-# ids = []
-# for rec in recs['recomms']:
-# 	ids.append(rec['id'])
-# print([d[item_id]['charityName'] for item_id in ids])
 
 
 
