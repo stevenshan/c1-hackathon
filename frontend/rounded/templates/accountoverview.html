@@ -1,16 +1,24 @@
-{% extends "base_page.html" %} {% block head %} {{ super() }}
-<link href="{{ url_for('static', filename='styles/accountoverview.css') }}" rel="stylesheet" type="text/css"> {{map.js}}
-{% endblock %} {% block _body %}
-<div class="container">
-    <div class="charity-banner">
-        <h2 style="color: white; font-weight: normal">Try the new Capital One Charity Account</h2>
+{% extends "base_page.html" %}
+
+{% block head %}
+
+{{ super() }}
+
+<link href="{{ url_for('static', filename='styles/accountoverview.css') }}" rel="stylesheet" type="text/css"> 
+
+{% endblock %}
+
+{% block _body %}
+<div class="center-container">
+    <div id="charity-banner">
+        <h2>Try the new Capital One Charity Account</h2>
         <a href="/setup">Let's Go</a>
     </div>
-    <div class="account-container">
+    <div id="account-container">
         {% for account in accounts %}
         <div class="account-card">
-            <h1 style="color: white">{{account}}</h1>
-            <h1 style="color: white">$100.00</h1>
+            <h1>{{account}}</h1>
+            <h1>$100.00</h1>
         </div>
         {% endfor %}
     </div>
