@@ -2,7 +2,7 @@ from recombee_api_client.api_client import RecombeeClient
 from recombee_api_client.api_requests import *
 from .find_charity import *
 from .user_data import *
-import ujson
+import json
 import redis
 from .. import firebase 
 import os
@@ -51,7 +51,7 @@ def get_dict():
         'data.json'
     )
 	with open(path, 'r') as infile:
-		all_charity_data = ujson.load(infile)
+		all_charity_data = json.load(infile)
 
 
 def add_items():
