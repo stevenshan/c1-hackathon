@@ -66,3 +66,10 @@ if (document.title == "Amazon.com Shopping Cart") {
        }
     }
 }
+
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log("TESFDSFSDF");
+  }
+);

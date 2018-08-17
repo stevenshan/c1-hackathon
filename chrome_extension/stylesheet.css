@@ -1,0 +1,25 @@
+body {
+    margin: 0px;
+    background: blue;
+}
+
+#container {
+    background: #ffffff;
+    border: 1px solid #bababa;
+    border-radius: 3px;
+    width: 400px;
+    padding: 0px 10px;
+}
+
+#container .row {
+    line-height: 50px;
+}
+
+#container .row label {
+    display: inline-block;
+    width: 155px;
+}
+
+#container .row #balance:before {
+    content: "$";
+}

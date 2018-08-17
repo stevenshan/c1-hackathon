@@ -34,7 +34,8 @@ def userCharities():
 			charityMarkers = pool.map(charityMarker, charitiesByLocation[:5],2)
 			charityMarkers = [x for x in charityMarkers if x != None]
 			charities = recommend.write_final_rec('user1')
-		except:
+		except Exception as e:
+			print("SKIPPED")
 			pass
 	try:
 		map = Map(
