@@ -1,7 +1,7 @@
 from . import controller
 from rounded.core import firebase
 import flask, json
-from rounded.core import charity_causes
+from rounded.core import charity_causes, url_tools
 import base64
 
 @controller.route("/setup", methods=["GET"])
@@ -13,7 +13,7 @@ def setup():
         "value": base64.b64encode(x.encode("utf8")).decode("utf8"),
         "active": (x in interests),
     } for x in charity_causes.CAUSES]
-    return flask.render_template("setup.html", causes=causes)
+    return url_tools.render_template("setup.html", causes=causes)
 
 @controller.route("/setup", methods=["POST"])
 def _setup():

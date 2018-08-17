@@ -75,6 +75,13 @@ Page Setup
     padding-top: 15px;
 }
 
+#current-charity-banner {
+    background: #f0f4f8;
+    padding: 15px;
+    margin-bottom: 25px;
+    box-sizing: border-box;
+}
+
 /*
 ---------------------------------------
 Header bar at top of page

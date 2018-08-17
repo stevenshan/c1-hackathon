@@ -1,6 +1,6 @@
 import flask
 import firebase_admin
-from rounded.core import firebase, redis
+from rounded.core import firebase, redis, user, url_tools
 from rounded.mod_voting import controller
 from rounded.mod_voting.lib import db as voting_db
 from rounded.mod_voting.lib import twitterCalls as tweeting
@@ -30,7 +30,7 @@ def vote():
         charity["description"] = redis.hget(charity["name"], "mission")
 
     _charities = json.dumps(charities)
-    return flask.render_template(
+    return url_tools.render_template(
         "voting.html",
         charities=charities,
         _charities=_charities,
@@ -47,6 +47,7 @@ def _vote():
         db_client = firebase.getDB()
 
         if votedFor != None:
+            user.setCharity(votedFor)
             voting_db.increment_charity(db_client, votedFor)
     elif type_ == "tweet":
         tweet()

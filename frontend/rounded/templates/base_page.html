@@ -51,7 +51,12 @@ body %}
     </div>
 
     <div id="body-container">
-        {% block _body %} {% endblock %}
+        {% if current != None %}
+        <div id="current-charity-banner" class="center-container">
+            Your currently selected charity is <strong>{{ current }}</strong>.
+        </div>
+        {% endif %}
+        {% block _body %}{% endblock %}
     </div>
 </div>
 

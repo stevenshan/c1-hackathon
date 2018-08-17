@@ -1,9 +1,10 @@
 from . import controller
 import flask, json
 from flask_googlemaps import Map
-from rounded.core import charity_causes
+from rounded.core import charity_causes, user, url_tools
 from rounded.core.charity_navigator import recommend, find_charity, user_data
 from rounded.core.user_info import accounts
+from flask import current_app as app
 import requests
 from multiprocessing import Pool
 
@@ -14,7 +15,7 @@ def userCharities():
 
 	API_key = "5843532b7d4678ebf648c08c09c61d81"
 	customers = accounts.get_customers(API_key)
-	customers_id = accounts.get_customers_id(customers, "Jamey's Account")
+	customers_id = accounts.get_customers_id(customers, app.config.get("CUSTOMER"))
 	client = accounts.make_client(API_key, customers_id)
 
 	charityMarkers = []
@@ -37,8 +38,11 @@ def userCharities():
 		markers=charityMarkers,
 	)
 
-
-	return flask.render_template("usercharities.html", map=map, charities=charities)
+	return url_tools.render_template(
+		"usercharities.html",
+		map=map,
+		charities=charities,
+	)
 
 def charityMarker(charity):
 	mailingAddress = charity['mailingAddress']

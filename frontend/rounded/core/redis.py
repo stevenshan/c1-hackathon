@@ -22,6 +22,14 @@ def dbOperation(func):
     return _func
 
 @dbOperation
+def set(key, value):
+    return db.set(key, value)
+
+@dbOperation
+def get(key):
+    return db.get(key)
+
+@dbOperation
 def hget(key, field):
     return db.hget(key, field)
 

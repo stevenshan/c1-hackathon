@@ -1,5 +1,6 @@
 import json
 import requests
+from flask import current_app as app
 
 class Client(object):
     firstName = ""
@@ -42,7 +43,7 @@ def get_customers(key):
 
 #returns customer id
 def get_customers_id(response, user_nickname):
-    user_nickname = "Jamey's Account"
+    user_nickname = app.config.get("CUSTOMER")
     for customer in response:
         if customer["nickname"] == user_nickname:
             customer_id = customer["customer_id"]
