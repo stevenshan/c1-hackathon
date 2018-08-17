@@ -3,7 +3,7 @@ import flask
 
 # this will be filtered out later if needed
 accounts = ["Venture One",
-'Essential Checking']
+'Essential Checking', "kill me"]
 
 @controller.route("/account-overview", methods=["GET"])
 def accountoverview():

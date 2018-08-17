@@ -1,15 +1,18 @@
 .grid-container {
     display: grid;
     grid-template-columns: 50% 50%;
-    padding: 10px;
 }
 
 .grid-item {
     padding: 20px;
 }
 
-h1 {
+.grid-item h1 {
     text-align: center;
+    font-size: 26px;
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 20px;
 }
 
 .charities-list {
@@ -23,7 +26,7 @@ h1 {
 .charities-list li {
     display: block;
     width: 100%;
-    padding: 10px;
+    padding: 10px 0px;
     border-bottom: 1px solid rgba(0,0,0,.3);
     border-top: 1px solid rgba(255,255,255,.2);
     box-sizing: border-box;

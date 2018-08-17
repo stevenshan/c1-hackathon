@@ -371,7 +371,7 @@ footer #footer-disclosures #equalhousinglender .sprite {
 
     #header-nav .nav-bar li {
         display: block;
-        color: #303030;
+        color: #303030 !important;
         float: none;
     }
 
