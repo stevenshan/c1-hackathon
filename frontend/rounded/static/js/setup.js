@@ -63,7 +63,7 @@ function setupMultistepForm() {
 
             if (i == pages.length - 1) {
                 var submitButton = $(
-                    '<div class="button submit">Submit</div>'
+                    '<button class="button submit">Submit</button>'
                 );
                 navButtons.append(submitButton);
             }
