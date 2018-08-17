@@ -1,0 +1,24 @@
+{% extends "base_page.html" %} {% block head %} {{ super() }}
+<link href="{{ url_for('static', filename='styles/usercharities.css') }}" rel="stylesheet" type="text/css"> {{map.js}} {%
+endblock %} {% block _body %}
+<div class="grid-container">
+    <div class="grid-item">
+        <div class="grid-subtitle">
+            <h1>Charities Near You</h1>
+        </div>
+        <div class="map-container">
+            {{map.html}}
+        </div>
+    </div>
+    <div class="grid-item">
+        <div class="grid-subtitle">
+            <h1>Charities You Might Like</h1>
+        </div>
+        <ul class="charities-list">
+            {% for charity in charities %}
+            <li class="">{{charity}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
