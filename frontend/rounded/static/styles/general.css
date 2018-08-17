@@ -60,14 +60,14 @@ Page Setup
 #body-wrapper {
     min-height: 100%;
 
-    /* height of footer - 25 */
-    margin-bottom: -155px;
+    /* height of footer */
+    margin-bottom: -205px;
 }
 
 #body-wrapper:after {
     content: "";
     display: block;
-    height: 180px;
+    height: 205px;
 }
 
 #body-container {
@@ -171,6 +171,7 @@ Footer at bottom
 */
 
 footer {
+    margin-top: 25px;
     height: 180px;
     background: #ededed;
 }
@@ -406,11 +407,11 @@ footer #footer-disclosures #equalhousinglender .sprite {
     }
 
     #body-wrapper {
-        margin-bottom: -525px;
+        margin-bottom: -575px;
     }
 
     #body-wrapper:after {
-        height: 550px;
+        height: 575px;
     }
 
     footer {
