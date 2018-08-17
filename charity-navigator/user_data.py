@@ -27,8 +27,8 @@ def write_current_suggestion(db, suggestion):
 	user_ref.update(data)
 
 
-def access_suggestions():
-	db = connect_to_db()
+def access_suggestions(db):
+	#db = connect_to_db()
 	interests = get_interests(db)
 	suggestions = [s['ein'] for s in get_suggestions(interests) if not(s['mission'] == 'null')]
 	return suggestions
