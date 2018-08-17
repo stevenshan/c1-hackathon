@@ -1,12 +1,10 @@
 #charity-banner {
     height: 50px;
+    line-height: 50px;
     background-color: #d03027;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     box-sizing: border-box;
     padding: 0px 15px;
-    margin-bottom: 25px; 
+    margin-bottom: 25px;
 }
 
 #charity-banner h2 {
@@ -15,13 +13,24 @@
     margin: 0px;
     font-size: 19px;
     font-weight: normal;
+    float: left;
 }
 
 #charity-banner a {
-    background-color: white;
-    color: black;
-    padding: 5px;
+    height: 21px;
+    line-height: 21px;
+    display: block;
+    background-color: #ffffff;
+    color: #424242 !important;
+    padding: 5px 10px;
+    width: 60px;
     border-radius: 2px;
+    float: right;
+    margin-top: 9px;
+}
+
+#charity-banner a:hover {
+    background-color: #f2f2f2;
 }
 
 #account-container {
@@ -33,7 +42,8 @@
 
 .account-card {
     height: 150px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;    
     align-items: center;
     justify-content: space-evenly;
     color: #ffffff;
@@ -65,4 +75,17 @@
     z-index: -1;
     opacity: 0.8;
     background: #2a4b74;
+}
+
+.account-card h1 {
+    text-align: center;
+    padding: 10px;
+}
+
+@media only screen and (max-width: 750px) {
+
+    #account-container {
+        grid-template-columns: 1fr;    
+    }
+
 }

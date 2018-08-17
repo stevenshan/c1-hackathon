@@ -5,6 +5,7 @@ import sys
 from dicttoxml import dicttoxml
 sys.path.append("../")
 from user_info.accounts import *
+import pickle
 
 global my_zip_code
 global my_city
@@ -227,23 +228,25 @@ def output_all():
 				results[org['charityName']] = org
 	#print(results)
 	final_results = {}
+	database_dict = {}
 	#for id in all_results.keys():
 	#	org = all_results[id]
 	print('making final_results')
-	for org_name in results.keys():
+	for org_name in list(results.keys()):
 		org = results[org_name]
 		if not(type(org) is str) and not('errorMessage' in org.keys()):
 			if 'cause' in org.keys():
 				if 'mission' in org.keys():
-					final_results[org['ein']] = {'charityName': org['charityName'],
+					name = org['charityName'].replace('.', ',')
+					final_results[org['ein']] = {'charityName': name,
 											'cause': org['cause']['causeID'],
 											'rating': org['currentRating']['rating'],
 											'state': org['mailingAddress']['stateOrProvince'],
 											'mission': org['mission']}
 				else:
-					final_results[org['ein']] = {'charityName': org['charityName'],
+					final_results[org['ein']] = {'charityName': name,
 											'cause': org['cause']['causeID'],
 											'rating': org['currentRating']['rating'],
 											'state': org['mailingAddress']['stateOrProvince'],
-											'mission': 'null'}
+											'mission': ''}
 	return final_results

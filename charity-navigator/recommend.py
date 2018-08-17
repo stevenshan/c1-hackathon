@@ -3,6 +3,7 @@ from recombee_api_client.api_requests import *
 from find_charity import *
 from user_data import *
 import ujson
+import redis
 
 num_recs = 10
 user = 'user1'
@@ -19,8 +20,26 @@ global all_charity_data
 def output_dict():
 	all_charity_data = output_all()
 	print('done getting charities')
-	with open('data.json', 'w+') as outfile:
-		ujson.dump(all_charity_data, outfile)
+
+	db = connect_to_db()
+
+	url = "redis://h:p633e4fabfec649572dc5def69168418c21558611dc98ed1f1bf848198c5ba8b0@ec2-52-5-241-209.compute-1.amazonaws.com:15939"
+	db = redis.from_url(url)
+
+	data = {}
+	for item_id in all_charity_data:
+		data_key = all_charity_data[item_id]['charityName']
+		data[data_key] = all_charity_data[item_id]
+
+		temp = data[data_key]
+		temp["charityName"] = data_key
+		db.hmset(data_key, temp)
+		# for key in data[data_key]:
+		# 	data[data_key][u'{:}'.format(key)] = data[data_key][key]
+
+	# with open('data.json', 'w+') as outfile:
+	# 	ujson.dump(all_charity_data, outfile)
+	return db
 
 def get_dict():
 	global all_charity_data
@@ -72,7 +91,7 @@ def get_index_in_hard_coded_list(hard_coded_suggestions, item_id):
 	except ValueError:
 		return num_recs
 
-def sort_recommendations(user, db):
+def get_sorted_recommendations(user, db):
 	get_dict()
 	(recommended_list, hard_coded_suggestions) = get_recommendations(user, db)
 	sorted_list = sorted(recommended_list+hard_coded_suggestions, 
@@ -84,10 +103,14 @@ def sort_recommendations(user, db):
 
 def write_final_rec(user):
 	db = connect_to_db()
-	rec_list = sort_recommendations(user, db)
+	rec_list = get_sorted_recommendations(user, db)
 	write_current_suggestion(db, rec_list[0])
+	return rec_list
 
-write_final_rec('user1')
+#output_dict()
+#get_dict()
+#print('got dict')
+#write_final_rec('user1')
 
 
 

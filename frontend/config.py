@@ -6,6 +6,8 @@ class Config:
     APP_NAME = "Rounded"
     SECRET_KEY = "########"
 
+    REDIS_URL = "redis://h:p633e4fabfec649572dc5def69168418c21558611dc98ed1f1bf848198c5ba8b0@ec2-52-5-241-209.compute-1.amazonaws.com:15939"
+
     '''
     Database
     '''
