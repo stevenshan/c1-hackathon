@@ -1,4 +1,6 @@
 from flask import Flask
+from rounded.core import firebase
+from flask_googlemaps import GoogleMaps
 
 # Database
 import flask_migrate
@@ -17,6 +19,8 @@ def create_app():
         instance_relative_config=True
     )
 
+    GoogleMaps(app, key="AIzaSyADCxm6oxGCYP94Gq7igqtczUDycRvTbJU")
+
     # load configuration
     configMode = os.environ.get("app_configuration", "Config")
     app.config.from_object("config." + str(configMode))
@@ -27,10 +31,16 @@ def create_app():
         db.init_app(app)
         migrate = flask_migrate.Migrate(app, db)
 
+        firebase.connect()
+
         # default app related views
         from rounded.views.controller import views
 
+        # import other blueprints
+        from rounded.mod_voting.controller import mod_voting
+
         # register controller blueprinters
         app.register_blueprint(views)
+        app.register_blueprint(mod_voting, url_prefix="/voting")
 
     return app

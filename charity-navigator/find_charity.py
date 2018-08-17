@@ -5,6 +5,7 @@ import sys
 from dicttoxml import dicttoxml
 sys.path.append("../")
 from user_info.accounts import *
+import pickle
 
 global my_zip_code
 global my_city
@@ -196,6 +197,13 @@ def get_charity_name_and_url(charity_name):
 	return (result['charityName'], website)
 
 
+def get_charity_location(charity_name):
+	payload = {"app_id": app_id, "app_key": app_key, "search": charity_name, "searchType": "NAME_ONLY", "sort": "RELEVANCE"}
+	url = "https://api.data.charitynavigator.org/v2/Organizations"
+	r = requests.get(url, params=payload)
+	result = r.json()[0]
+	return result['mailingAddress']
+
 
 #pprint.pprint(get_possible_interests())
 #pprint.pprint(get_names(get_suggestions(get_possible_interests()[:2])))
@@ -204,30 +212,41 @@ def get_charity_name_and_url(charity_name):
 
 
 
-# def output_all():
-# 	payload = {"app_id": app_id, "app_key": app_key}
-# 	url = "https://api.data.charitynavigator.org/v2/Organizations"
-# 	r = requests.get(url, params=payload)
-# 	results = r.json()
-# 	ids = [org['ein'] for org in results[:5]]
+def output_all():
+	print('finding all charities')
 
-# 	all_results = {}
-# 	for id in ids:
-# 		url2 = "https://api.data.charitynavigator.org/v2/Organizations{:}".format(id)
-# 		r2 = requests.get(url2, params=payload)
-# 		all_results
-# 	for org in all_results:
-# 		if not(type(org) is str) and not('errorMessage' in org.keys()):
-			
-# 			#if 'charityName' in org.keys() and 'cause' in org.keys() and 'currentRating' in org.keys():
-# 			all_results[org['charityName']] = {'charityName': org['charityName'],
-# 											'causeID': org['cause']['causeID'],
-# 											'rating': org['currentRating']['rating']}
-# 	return list(all_results.values())
-
-# d = output_all()
-
-# xml = dicttoxml(d, custom_root='items', attr_type=False)
-# f = open('xml_data.xml', "wb")
-# f.write(xml)
-
+	causes = get_causes(get_categories())
+	results = {}
+	for interest in list(causes.keys()):
+		cause_id = causes[interest]['causeID']
+		payload = {"app_id": app_id, "app_key": app_key, "causeID": cause_id}
+		url = "https://api.data.charitynavigator.org/v2/Organizations"
+		r = requests.get(url, params=payload)
+		result = r.json()
+		for org in result:
+			if not(type(org) is str) and not('errorMessage' in org.keys()):
+				results[org['charityName']] = org
+	#print(results)
+	final_results = {}
+	database_dict = {}
+	#for id in all_results.keys():
+	#	org = all_results[id]
+	print('making final_results')
+	for org_name in list(results.keys()):
+		org = results[org_name]
+		if not(type(org) is str) and not('errorMessage' in org.keys()):
+			if 'cause' in org.keys():
+				if 'mission' in org.keys():
+					name = org['charityName'].replace('.', ',')
+					final_results[org['ein']] = {'charityName': name,
+											'cause': org['cause']['causeID'],
+											'rating': org['currentRating']['rating'],
+											'state': org['mailingAddress']['stateOrProvince'],
+											'mission': org['mission']}
+				else:
+					final_results[org['ein']] = {'charityName': name,
+											'cause': org['cause']['causeID'],
+											'rating': org['currentRating']['rating'],
+											'state': org['mailingAddress']['stateOrProvince'],
+											'mission': ''}
+	return final_results

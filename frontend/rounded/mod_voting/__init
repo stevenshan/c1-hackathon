@@ -1,0 +1,1 @@
+from rounded.mod_voting import controller

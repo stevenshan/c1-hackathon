@@ -1,0 +1,52 @@
+{% extends "base_page.html" %} {% block head %} {{ super() }}
+
+<link href="{{ url_for('static', filename='styles/setup.css') }}" rel="stylesheet" type="text/css">
+
+<script src="{{ url_for('static', filename='js/setup.js') }}" type="text/javascript"></script> {% endblock %} {% block _body
+%}
+<div class="center-container">
+    <form action="" method="post" class="multistep-form">
+        <div class="tab-pane" label="Information">
+            <p>
+                Capital One is proud to present ROUNDED - a charity account program that allows you - our customer - to partner 
+                with charities and merchants across the nation. When you enable ROUNDED through your Capital One account, you are 
+                dedicating your spare change from every purchase to helping a good cause and <strong>CHANGING BANKING FOR GOOD</strong>.
+            </p>
+            <p>
+                Here's how it works: say you currently have $100.00 in your checking account and you make a $19.70 purchase with a connected
+                Capital One debit card. At the point of purchase, Capital One will round up your purchase amount to the nearest
+                dollar ($20.00) and put that extra 30 cents towards a charity account under your name.
+            </p>
+            <p>
+                Over time, all the extra change from your purchases accumulate, and you'll have the option of voting with fellow Capital One
+                customers to select one lucky charity from a "leaderboard" of charities. If you'd like to donate to a charity not listed, 
+                you can also browse through charities recommended for you based on machine learning technology analyzing your location, 
+                interests, and past donations. 
+            </p>
+            <p>
+                We're so excited to have you on this journey of social good with us, and we hope you decide to change the world - all with your
+                own change. Get started now!
+            </p>
+        </div>
+        <div class="tab-pane" label="Charity Interests">
+            <div class="tab-table">
+                {% for causes in charityCauses | slice(2) %}
+                <div class="tab-column">
+                    {%- for cause in causes -%}
+                    <div class="row-checkbox">
+                        {% with uuid=snippets.unique_id() %}
+                        <label for="c{{ uuid }}">
+                            <input name="cause[]" id="c{{ uuid }}" type="checkbox" value="" class="hidden">
+                            <i class="material-icons"></i>
+                            {{cause}}
+                        </label>
+                        {% endwith %}
+                    </div>
+                    {%- endfor -%}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </form>
+</div>
+{%- endblock %}

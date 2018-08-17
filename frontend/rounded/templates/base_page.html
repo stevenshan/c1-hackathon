@@ -1,0 +1,114 @@
+{% extends "base.html" %} {% block head %} {{ super() }}
+
+<link href="{{ url_for('static', filename='styles/general.css') }}" rel="stylesheet" type="text/css"> {% endblock %} {% block
+body %}
+
+<div id="body-wrapper">
+    <header>
+        <div class="center-container">
+            <a href="/">
+                <img alt="Capital One" src="{{ url_for('static', filename='imgs/Capital_One_logo.svg') }}" id="main-logo">
+            </a>
+
+            <ul class="nav-bar">
+                <a href="test">
+                    <li class="mobile-visible">
+                        <span href="test" id="signin-link" class="icon">Sign In</span>
+                    </li>
+                </a>
+            </ul>
+
+            <ul class="nav-bar left">
+                <label for="showMenuToggle">
+                    <li class="mobile-visible">
+                        <span id="menu-link" class="icon">Menu</span>
+                    </li>
+                </label>
+            </ul>
+        </div>
+    </header>
+    <input id="showMenuToggle" type="checkbox" class="hidden">
+    <div id="header-nav">
+        <div class="center-container">
+            <ul class="nav-bar">
+                <li>
+                    <a href="/account-overview">Your Bank Accounts</a>
+                </li>
+                <li>
+                    <a href="/voting/vote">Vote for Charity</a>
+                </li>
+                <li>
+                    <a href="/user-charities">See Your Charities</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div id="body-container">
+        {% block _body %} {% endblock %}
+    </div>
+</div>
+
+<footer>
+    <div class="center-container wrapper">
+        <div id="footer-nav-row" class="row">
+            <div class="left">
+                <ul class="nav-bar">
+                    <li class="footersubs">
+                        <a>Products</a>
+                    </li>
+                    <li class="footersubs">
+                        <a>About Us</a>
+                    </li>
+                    <li class="footersubs">
+                        <a>Careers</a>
+                    </li>
+                    <li class="footersubs">
+                        <a>Legal</a>
+                    </li>
+
+                    <li class="nosubs">
+                        <a>Contact Us</a>
+                    </li>
+                    <li>
+                        <a>Privacy</a>
+                    </li>
+                    <li>
+                        <a>Security</a>
+                    </li>
+                    <li>
+                        <a>Terms & Conditions</a>
+                    </li>
+                    <li>
+                        <a>Accessibility</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="social-media" class="sprites right">
+                <a class="twitter sprite"></a>
+                <a class="facebook sprite"></a>
+                <a class="youtube sprite"></a>
+                <a class="linkedin sprite"></a>
+                <a class="instagram sprite"></a>
+            </div>
+        </div>
+        <div id="footer-company-row" class="row">
+            <div class="left">
+                <img alt="Capital One" src="{{ url_for('static', filename='imgs/Capital_One_logo.svg') }}" id="footer-logo">
+                <span id="footer-copyright">&copy;2018 Capital One</span>
+            </div>
+            <div class="right">
+                <div id="footer-disclosures" class="sprites">
+                    <div id="memberfdic" class="sprite"></div>
+                    <div id="equalhousinglender">
+                        Equal Housing Lender
+                        <i class="sprite"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base_page.html" %} 
+
+{% block head %} 
+
+{{ super() }}
+
+<script type="text/javascript">
+    var charityInfo = {{ _charities|safe }};
+</script>
+
+<link href="{{ url_for('static', filename='styles/voting.css') }}" rel="stylesheet" type="text/css"> 
+<script src="{{ url_for('static', filename='js/voting.js') }}" type="text/javascript"></script>
+
+{% endblock %} 
+
+{% block _body %}
+<div id="charity-voting" class="center-container">
+    <div id="charity-leaderboard-header">
+        <h1>Vote for a Charity</h1>
+    </div>
+    <form method="post">
+        <div id="leaderboard">
+            <div id="selected-charity">
+                <div class="container">
+                    <h1>Selected Charity</h1>
+                    <img id="leader-thumbnail" class="thumbnail" src="http://www.electricvelocity.com.au/Upload/Blogs/smart-e-bike-side_2.jpg">
+                    <div class="title" id="selected-charity-name">
+                        Children's and Family Services
+                    </div>
+                    <p id="selected-charity-desc">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    </p>
+                </div>
+            </div>
+            <div id="rest-of-leaderboard">
+                <ul>
+                    {% for charity in charities %}
+
+                    {% with uuid=snippets.unique_id() %}
+                    <input 
+                        name="selectedCharity" 
+                        type="radio" 
+                        id="r{{ uuid }}" 
+                        class="hidden charity-select" 
+                        value="{{ charity.name }}"
+                        enum="{{ loop.index - 1 }}" 
+                    >
+                    <label for="r{{ uuid }}">
+                        <li class="charity-list-item">
+                            <div>
+                                <img id="charity-thumbnail" class="thumbnail" src="http://www.electricvelocity.com.au/Upload/Blogs/smart-e-bike-side_2.jpg">
+                            </div>
+                            <div>
+                                <span>{{ charity.name }}</span>
+                            </div>
+                            <div>
+                                {{ charity.votes }}
+                            </div>
+                        </li>
+                    </label>
+                    {% endwith %}
+
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="actions">
+            <a href="" onclick()="tweet()"><img id="twitter-icon" src="../static/imgs/Twitter_Social_Icon_Square_Color.png"/></a>
+            <a class="button" href="/user-charities">Find More Charities</a>
+            <button type="submit" class="button submit">Vote</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
