@@ -153,12 +153,13 @@ Main navigation bar under header
 #header-nav .nav-bar li {
     float: left;
     line-height: 50px;
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
 #header-nav .nav-bar li a {
     padding: 0px 15px;
     cursor: pointer;
+    color: white;
 }
 
 #header-nav .nav-bar li:hover {

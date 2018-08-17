@@ -13,7 +13,19 @@ charities = ["Children's and Family Services",
 'Private Liberal Arts Colleges',
 'Youth Education Programs and Services',
 'Education Policy and Reform',
-'Social and Public Policy Research']
+'Social and Public Policy Research',
+'Other Education Programs and Services',
+'Private Elementary and Secondary Schools',
+'Universities, Graduate Schools, and Technological Institutes',
+'Early Childhood Programs and Services',
+'International Peace, Security, and Affairs',
+'Development and Relief Services',
+'Humanitarian Relief Supplies',
+'Foreign Charity Support Organizations',
+'Advocacy and Education',
+'Religious Media and Broadcasting',
+'Religious Activities',
+'Zoos and Aquariums']
 
 @controller.route("/user-charities", methods=["GET"])
 def userCharities():

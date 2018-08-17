@@ -12,4 +12,5 @@ from . import controller
 from . import homepage
 from . import setup
 from . import usercharities
+from . import accountoverview
 
