@@ -28,21 +28,26 @@ def userCharities():
 	charities = []
 
 	if not TESTING:
-		pool = Pool(processes=4)
-		charitiesByLocation = find_charity.get_suggestions_by_city(client.city)
-		charityMarkers = pool.map(charityMarker, charitiesByLocation[:5],2)
-		charityMarkers = [x for x in charityMarkers if x != None]
-		charities = recommend.write_final_rec('user1')
-
-	map = Map(
-    	identifier="view-side",
-    	lat=38.64181689999999,
-    	lng=-83.7657646,
-		style="height:500px;width:100%;",
-		zoom=12,
-		# fit_markers_to_bounds=True,
-		markers=charityMarkers,
-	)
+		try:
+			pool = Pool(processes=4)
+			charitiesByLocation = find_charity.get_suggestions_by_city(client.city)
+			charityMarkers = pool.map(charityMarker, charitiesByLocation[:5],2)
+			charityMarkers = [x for x in charityMarkers if x != None]
+			charities = recommend.write_final_rec('user1')
+		except:
+			pass
+	try:
+		map = Map(
+	    	identifier="view-side",
+	    	lat=38.64181689999999,
+	    	lng=-83.7657646,
+			style="height:500px;width:100%;",
+			zoom=12,
+			# fit_markers_to_bounds=True,
+			markers=charityMarkers,
+		)
+	except:
+		map = None
 
 	db = firebase.getDB()
 	topCharity = topDB.getTopCharity(db)
