@@ -129,7 +129,7 @@ def get_suggestions_by_zip(zip_code, interests):
 	results = {}
 	for interest in interests:
 		cause_id = causes[interest]['causeID']
-		payload = {"app_id": app_id, "app_key": app_key, "zip": zip_code, "causeID": cause_id}
+		payload = {"app_id": app_id, "app_key": app_key, "zip": zip_code}
 		url = "https://api.data.charitynavigator.org/v2/Organizations"
 		r = requests.get(url, params=payload)
 		result = r.json()
@@ -139,18 +139,15 @@ def get_suggestions_by_zip(zip_code, interests):
 	return list(results.values())
 
 # get list of suggestions based on location, interests
-def get_suggestions_by_city(city, interests):
-	causes = get_causes(get_categories())
+def get_suggestions_by_city(city):
 	results = {}
-	for interest in interests:
-		cause_id = causes[interest]['causeID']
-		payload = {"app_id": app_id, "app_key": app_key, "city": city, "causeID": cause_id}
-		url = "https://api.data.charitynavigator.org/v2/Organizations"
-		r = requests.get(url, params=payload)
-		result = r.json()
-		for org in result:
-			if not(type(org) is str) and not('errorMessage' in org.keys()):
-				results[org['charityName']] = org
+	payload = {"app_id": app_id, "app_key": app_key, "city": city}
+	url = "https://api.data.charitynavigator.org/v2/Organizations"
+	r = requests.get(url, params=payload)
+	result = r.json()
+	for org in result:
+		if not(type(org) is str) and not('errorMessage' in org.keys()):
+			results[org['charityName']] = org
 	return list(results.values())
 
 # get list of suggestions based on location, interests
@@ -250,3 +247,5 @@ def output_all():
 											'state': org['mailingAddress']['stateOrProvince'],
 											'mission': ''}
 	return final_results
+
+print(get_suggestions_by_city('McLean'))
