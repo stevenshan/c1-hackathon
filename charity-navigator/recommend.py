@@ -36,8 +36,8 @@ def get_recommendations(user):
 	recommended = client.send(RecommendItemsToUser(user, 5))
 	return recommended
 
-def update_recommendations_with_donation(user, item):
-	recommended = client.send(ItemBasedRecommendation(item, 5, target_user_id=user))
+def add_rejection(user, item):
+	client.send(AddRating(user, item, 1))
 
 
 #add_items()
