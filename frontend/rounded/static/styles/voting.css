@@ -135,12 +135,22 @@
     float: right;
 }
 
+#tweet-button {
+    margin: 0px;
+    padding: 0px;
+    width: auto;
+    height: auto;
+    border: none;
+}
+
 #twitter-icon {
     cursor: pointer;
     vertical-align: middle;
     width: 40px;
     height: 40px;
     border-radius: 3px;
+    margin: 0px;
+    padding: 0px;
 }
 
 @media only screen and (max-width: 750px) {

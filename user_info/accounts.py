@@ -93,7 +93,7 @@ def add_account(key, client):
     headers = {
         'Content-Type': "application/json",
         'Cache-Control': "no-cache",
-        'Postman-Token': "1ed1a184-f90c-4257-815b-0daff4e1761f"
+        'Postman-Token': "1ed1a184-f90c-4257-815b-0daffe14761f"
         }
 
     account = requests.request("POST", url, data=payload, headers=headers, params=querystring)
@@ -150,7 +150,7 @@ def add_charity_balance(key, client):
         # withdraw money from main account
         withdraw_from_balance(key, amount, "5b75bbddf0cec56abfa436a6")
 
-        url = "http://api.reimaginebanking.com/accounts/5b75bbe6f0cec56abfa436a7/deposits"
+        url = "http://api.reimaginebanking.com/accounts/5b75bb6ef0cec56abfa436a7/deposits"
 
         querystring = {"key":key}
 
