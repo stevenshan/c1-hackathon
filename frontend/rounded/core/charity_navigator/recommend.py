@@ -110,11 +110,11 @@ def get_index_in_hard_coded_list(hard_coded_suggestions, item_id):
 def get_sorted_recommendations(user, db):
 	get_dict()
 	(recommended_list, hard_coded_suggestions) = get_recommendations(user, db)
+	sorted_list = [r for r in sorted_list if r in all_charity_data.keys()]
 	sorted_list = sorted(recommended_list+hard_coded_suggestions, 
 		key = lambda item_id: (get_index_in_ML_list(recommended_list, item_id) + get_index_in_hard_coded_list(hard_coded_suggestions, item_id))/2, reverse=True)[:num_recs]
 	return [{'charityName': all_charity_data[item_id]['charityName'], 'mission': all_charity_data[item_id]['mission']} 
-		for item_id in sorted_list 
-		if item_id in all_charity_data.keys()]
+		for item_id in sorted_list ]
 
 def write_final_rec(user):
 	db = firebase.getDB() #connect_to_db()

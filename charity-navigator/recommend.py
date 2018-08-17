@@ -62,8 +62,8 @@ def add_items():
 		client.send(SetItemValues(id, values)) #optional parameters:cascade_create=<boolean>))
 
 
-def add_donation(user, charity_navigator_url):
-	r = AddPurchase(user, charity_navigator_url)
+def add_donation(user, item_id):
+	r = AddPurchase(user, item_id)
 	client.send(r)
 
 def get_recommendations(user, db):
@@ -110,9 +110,21 @@ def write_final_rec(user):
 #output_dict()
 #get_dict()
 #print('got dict')
-#write_final_rec('user1')
+# #write_final_rec('user1')
+# get_dict()
+# cause_num = 17
+# for charity in all_charity_data:
+# 	if all_charity_data[charity]['cause'] == cause_num:
+# 		name = all_charity_data[charity]['charityName']
+# 		item_id = charity
+# 		add_donation('user1', item_id)
+# 		print(item_id)
 
-
+#client.send(DeleteUser('user1'))
+#client.send(AddUser('user1'))
+#add_donation('user1', '010212541')
+db = connect_to_db()
+print(get_sorted_recommendations('user1', db))
 
 
 
