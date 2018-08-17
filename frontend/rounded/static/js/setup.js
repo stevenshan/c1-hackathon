@@ -75,7 +75,7 @@ function setupMultistepForm() {
 
         });
 
-        showPage(1);
+        showPage(0);
     };
 
     init();
