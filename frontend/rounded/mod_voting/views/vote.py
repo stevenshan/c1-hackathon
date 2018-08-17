@@ -12,19 +12,9 @@ def vote():
     db_client = firebase.getDB()
 
     try:
-        raw_charities = voting_db.get_charities(db_client)
+        charities = voting_db.get_charities(db_client)
     except Exception as e:
         return "Error retrieving charities: " + str(e)
-
-    # processs dictionary
-    charities = [
-        {
-            'name': key,
-            'votes': int(raw_charities[key]),
-            'description': "I don't feell like writing this",
-        } for key in raw_charities
-    ]
-    charities.sort(key=lambda x: x["votes"], reverse=True)
 
     for charity in charities:
         charity["description"] = redis.hget(charity["name"], "mission")

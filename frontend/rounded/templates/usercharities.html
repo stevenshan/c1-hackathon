@@ -25,10 +25,20 @@
                 <h1>Charities You Might Like</h1>
             </div>
             <ul class="charities-list">
+                <a href="?choose={{ topCharity.name }}">
+                    <li class="top-charity">
+                        {{ topCharity.name }} 
+                        <div>
+                            #1 rated charity this week
+                        </div>
+                    </li>
+                </a>
                 {% for charity in charities %}
-                <li>
-                    {{ charity }}
-                </li>
+                <a href="?choose={{ charity }}">
+                    <li>
+                        {{ charity }}
+                    </li>
+                </a>
                 {% endfor %}
             </ul>
         </div>

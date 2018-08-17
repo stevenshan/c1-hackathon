@@ -1,17 +1,23 @@
 from . import controller
 import flask, json
 from flask_googlemaps import Map
-from rounded.core import charity_causes, user, url_tools
+from rounded.core import charity_causes, user, url_tools, firebase
 from rounded.core.charity_navigator import recommend, find_charity, user_data
+from rounded.mod_voting.lib import db as topDB
 from rounded.core.user_info import accounts
 from flask import current_app as app
 import requests
 from multiprocessing import Pool
 
-TESTING = True
+TESTING = False
 
 @controller.route("/user-charities", methods=["GET"])
 def userCharities():
+
+	charityChoice = flask.request.args.get("choose")
+	if charityChoice != None:
+		user.setCharity(str(charityChoice))
+		return flask.redirect(flask.url_for("app.userCharities"))
 
 	API_key = "5843532b7d4678ebf648c08c09c61d81"
 	customers = accounts.get_customers(API_key)
@@ -24,7 +30,7 @@ def userCharities():
 	if not TESTING:
 		pool = Pool(processes=4)
 		charitiesByLocation = find_charity.get_suggestions_by_city(client.city)
-		charityMarkers = pool.map(charityMarker, charitiesByLocation[:10],2)
+		charityMarkers = pool.map(charityMarker, charitiesByLocation[:5],2)
 		charityMarkers = [x for x in charityMarkers if x != None]
 		charities = recommend.write_final_rec('user1')
 
@@ -38,18 +44,23 @@ def userCharities():
 		markers=charityMarkers,
 	)
 
+	db = firebase.getDB()
+	topCharity = topDB.getTopCharity(db)
+
 	return url_tools.render_template(
 		"usercharities.html",
 		map=map,
 		charities=charities,
+		topCharity = topCharity,
 	)
 
 def charityMarker(charity):
 	mailingAddress = charity['mailingAddress']
 	coords = convertAddressToLatLong(mailingAddress)
 	if len(coords) >= 2:
+		name = str(charity["charityName"])
 		coords.update({
-			"infobox": str(charity["charityName"])
+			"infobox": '<a href="?choose=' + name + '">' + name + '</a>'
 		})
 		return coords
 

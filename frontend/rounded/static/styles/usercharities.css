@@ -5,7 +5,7 @@
 }
 
 .grid-item {
-    padding: 20px 0px;
+    padding-bottom: 20px;
 }
 
 .grid-item h1 {
@@ -21,7 +21,7 @@
     margin: 0px;
     padding: 0px;
     height: 500px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .charities-list li {
@@ -31,6 +31,20 @@
     border-bottom: 1px solid rgba(0,0,0,.3);
     border-top: 1px solid rgba(255,255,255,.2);
     box-sizing: border-box;
+}
+
+.charities-list li:hover {
+    background: #f7f7f7;
+}
+
+.charities-list .top-charity {
+    font-size: 1.15em;
+}
+
+.charities-list .top-charity div {
+    font-style: italic;
+    margin-top: 5px;
+    font-size: 0.75em;
 }
 
 .map-container {
