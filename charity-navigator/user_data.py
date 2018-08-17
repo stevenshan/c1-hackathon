@@ -30,14 +30,14 @@ def write_current_suggestion(db, suggestion):
 def access_suggestions(db):
 	#db = connect_to_db()
 	interests = get_interests(db)
-	suggestions = [s['ein'] for s in get_suggestions(interests) if not(s['mission'] == 'null')]
+	suggestions = [s['ein'] for s in get_suggestions(interests) if not(s['mission'] == '')]
 	return suggestions
 
 # finds top suggestion and pushes to database
 def update_suggestion():
 	db = connect_to_db()
 	interests = get_interests(db)
-	suggestions = [s for s in get_suggestions(interests) if not(s['mission'] == 'null')]
+	suggestions = [s for s in get_suggestions(interests) if not(s['mission'] == '')]
 	suggestion = suggestions[0]
 	write_current_suggestion(db, suggestion)
 
