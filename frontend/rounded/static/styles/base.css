@@ -21,6 +21,10 @@ button, input {
     font-size: inherit;
 }
 
+a {
+    color: inherit !important;
+}
+
 /*
 Fonts from Capital One's website
 */

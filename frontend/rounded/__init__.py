@@ -1,4 +1,5 @@
 from flask import Flask
+from rounded.core import firebase
 from flask_googlemaps import GoogleMaps
 
 # Database
@@ -29,6 +30,8 @@ def create_app():
         from rounded.models import db
         db.init_app(app)
         migrate = flask_migrate.Migrate(app, db)
+
+        firebase.connect()
 
         # default app related views
         from rounded.views.controller import views
