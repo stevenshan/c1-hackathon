@@ -3,6 +3,7 @@ import firebase_admin
 from rounded.core import firebase
 from rounded.mod_voting import controller
 from rounded.mod_voting.lib import db as voting_db
+from rounded.mod_voting.lib import twitterCalls as tweeting
 import json
 
 @controller.route("/vote", methods=["GET"])
@@ -43,3 +44,9 @@ def _vote():
         voting_db.increment_charity(db_client, votedFor)
 
     return flask.redirect(flask.url_for("mod_voting.vote"))
+
+def tweet():
+    form = flask.request.form
+    votedFor = form.get("selectedCharity")
+    if votedFor != None:
+        tweeting.tweetVoteMessage(votedFor)
