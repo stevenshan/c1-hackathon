@@ -94,18 +94,25 @@ def get_index_in_hard_coded_list(hard_coded_suggestions, item_id):
 def get_sorted_recommendations(user, db):
 	get_dict()
 	(recommended_list, hard_coded_suggestions) = get_recommendations(user, db)
+
 	sorted_list = sorted(recommended_list+hard_coded_suggestions, 
-		key = lambda item_id: (get_index_in_ML_list(recommended_list, item_id) + get_index_in_hard_coded_list(hard_coded_suggestions, item_id))/2, reverse=True)[:num_recs]
-	print(sorted_list)
+		key = lambda item_id: (get_index_in_ML_list(recommended_list, item_id) + get_index_in_hard_coded_list(hard_coded_suggestions, item_id))/2, reverse=True)
+	sorted_list = [r for r in sorted_list if r in all_charity_data.keys()][:num_recs]
 	return [{'charityName': all_charity_data[item_id]['charityName'], 'mission': all_charity_data[item_id]['mission']} 
-		for item_id in sorted_list 
-		if item_id in all_charity_data.keys()]
+		for item_id in sorted_list ]
 
 def write_final_rec(user):
 	db = connect_to_db()
 	rec_list = get_sorted_recommendations(user, db)
 	write_current_suggestion(db, rec_list[0])
-	return rec_list
+	return [r['charityName'] for r in rec_list]
+
+#output_dict()
+get_dict()
+db = connect_to_db()
+print(get_sorted_recommendations('user1', db))
+#print('got dict')
+#print(write_final_rec('user1'))
 
 #output_dict()
 #get_dict()
@@ -123,8 +130,8 @@ def write_final_rec(user):
 #client.send(DeleteUser('user1'))
 #client.send(AddUser('user1'))
 #add_donation('user1', '010212541')
-db = connect_to_db()
-print(get_sorted_recommendations('user1', db))
+#db = connect_to_db()
+#print(get_sorted_recommendations('user1', db))
 
 
 
