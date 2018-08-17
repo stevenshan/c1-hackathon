@@ -9,6 +9,7 @@ def homepage():
 
 @controller.route("/data", methods=["GET"])
 def datamessage():
+    BANK.refresh()
     accounts = BANK.ACCOUNTS
     balance = "0.00"
     for account in accounts:

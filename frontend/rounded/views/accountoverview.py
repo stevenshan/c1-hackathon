@@ -9,6 +9,7 @@ accounts = ["Venture One",
 
 @controller.route("/account-overview", methods=["GET"])
 def accountoverview():
+    BANK.refresh()
     accounts = BANK.ACCOUNTS
     hasCharity = False
     for account in accounts:
