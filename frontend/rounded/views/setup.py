@@ -28,4 +28,4 @@ def _setup():
 
     firebase.change_interests(db, causes)
 
-    return flask.redirect(flask.url_for("app.setup"))
+    return flask.redirect(flask.url_for("app.accountoverview"))
