@@ -1,6 +1,6 @@
 import flask
 import firebase_admin
-from rounded.core import firebase
+from rounded.core import firebase, redis
 from rounded.mod_voting import controller
 from rounded.mod_voting.lib import db as voting_db
 from rounded.mod_voting.lib import twitterCalls as tweeting
@@ -25,6 +25,9 @@ def vote():
         } for key in raw_charities
     ]
     charities.sort(key=lambda x: x["votes"], reverse=True)
+
+    for charity in charities:
+        charity["description"] = redis.hget(charity["name"], "mission")
 
     _charities = json.dumps(charities)
     return flask.render_template(

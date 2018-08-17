@@ -7,6 +7,8 @@ from rounded.core.user_info import accounts
 import requests
 from multiprocessing import Pool
 
+TESTING = True
+
 @controller.route("/user-charities", methods=["GET"])
 def userCharities():
 
@@ -15,13 +17,16 @@ def userCharities():
 	customers_id = accounts.get_customers_id(customers, "Jamey's Account")
 	client = accounts.make_client(API_key, customers_id)
 
-	charitiesByLocation = find_charity.get_suggestions_by_city(client.city)
 	charityMarkers = []
+	charities = []
 
-	# charityMarkers = [charityMarker(charity) for charity in charitiesByLocation[:2]]
-	pool = Pool(processes=4)
-	charityMarkers = pool.map(charityMarker, charitiesByLocation[:10],2)
-	charityMarkers = [x for x in charityMarkers if x != None]
+	if not TESTING:
+		pool = Pool(processes=4)
+		charitiesByLocation = find_charity.get_suggestions_by_city(client.city)
+		charityMarkers = pool.map(charityMarker, charitiesByLocation[:10],2)
+		charityMarkers = [x for x in charityMarkers if x != None]
+		charities = recommend.write_final_rec('user1')
+
 	map = Map(
     	identifier="view-side",
     	lat=38.64181689999999,
@@ -33,8 +38,7 @@ def userCharities():
 	)
 
 
-	causes = recommend.write_final_rec('user1')
-	return flask.render_template("usercharities.html", map=map, causes=causes)
+	return flask.render_template("usercharities.html", map=map, charities=charities)
 
 def charityMarker(charity):
 	mailingAddress = charity['mailingAddress']
