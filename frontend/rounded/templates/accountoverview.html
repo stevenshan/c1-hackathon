@@ -17,8 +17,8 @@
     <div id="account-container">
         {% for account in accounts %}
         <div class="account-card">
-            <h1>{{account}}</h1>
-            <h1>$100.00</h1>
+            <h1>{{ account.nickname }}</h1>
+            <h1>${{ account.strBalance }}</h1>
         </div>
         {% endfor %}
     </div>

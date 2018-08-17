@@ -79,7 +79,7 @@ def get_customers_accounts(key, client):
 
     customer_accounts = requests.request("GET", url, headers=headers, params=querystring)
     customer_accounts = json.loads(customer_accounts.text)
-    print(json.dumps(customer_accounts, indent=2))
+    # print(json.dumps(customer_accounts, indent=2))
 
     return customer_accounts;
 
