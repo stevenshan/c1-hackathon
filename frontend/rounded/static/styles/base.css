@@ -16,6 +16,11 @@ html, body {
     outline: none;
 }
 
+button, input {
+    font-family: inherit;
+    font-size: inherit;
+}
+
 /*
 Fonts from Capital One's website
 */

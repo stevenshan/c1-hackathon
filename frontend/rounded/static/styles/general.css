@@ -37,6 +37,7 @@ General things
     cursor: pointer;
     display: inline-flex;
     border-radius: 3px;
+    border: 0px;
 }
 
 .button:hover {
