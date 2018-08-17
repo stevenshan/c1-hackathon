@@ -33,7 +33,7 @@ General things
 .button {
     padding: 10px;
     background: #6b81f5;
-    color: #ffffff;
+    color: #ffffff !important;
     cursor: pointer;
     display: inline-flex;
     border-radius: 3px;

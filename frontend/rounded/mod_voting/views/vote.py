@@ -1,13 +1,30 @@
 import flask
+import firebase_admin
+from rounded.core import firebase
 from rounded.mod_voting import controller
+from rounded.mod_voting.lib import db as voting_db
 import json
 
-charities = [{'name': "Children's and Family Services", 'description': "lorem ipsum delores something I don't feel like typing", 'votes': 817}, {'name': 'Homeless Services', 'description': "lorem ipsum delores something I don't feel like typing", 'votes': 519}, {'name': 'Youth Development, Shelter, and Crisis Services', 'description': "lorem ipsum delores something I don't feel like typing", 'votes': 243}, {'name': 'Food Banks, Food Pantries, and Food Distribution', 'description': "lorem ipsum delores something I don't feel like typing", 'votes': 882}, {'name': 'Social Services', 'description': "lorem ipsum delores something I don't feel like typing", 'votes': 634}, {'name': 'Multipurpose Human Service Organizations', 'description': "lorem ipsum delores something I don't feel like typing", 'votes': 224}, {'name': 'Scholarship and Financial Support', 'description': "lorem ipsum delores something I don't feel like typing", 'votes': 868}, {'name': 'Private Liberal Arts Colleges', 'description': "lorem ipsum delores something I don't feel like typing", 'votes': 69}, {'name': 'Youth Education Programs and Services', 'description': "lorem ipsum delores something I don't feel like typing", 'votes': 480}, {'name': 'Education Policy and Reform', 'description': "lorem ipsum delores something I don't feel like typing", 'votes': 993}, {'name': 'Social and Public Policy Research', 'description': "lorem ipsum delores something I don't feel like typing", 'votes': 335}]
-
-charities.sort(key=lambda x: x["votes"], reverse=True) # by popularity
-
 @controller.route("/vote", methods=["GET"])
-def voting():
+def vote():
+
+    db_client = firebase.getDB()
+
+    try:
+        raw_charities = voting_db.get_charities(db_client)
+    except Exception as e:
+        return "Error retrieving charities: " + str(e)
+
+    # processs dictionary
+    charities = [
+        {
+            'name': key,
+            'votes': int(raw_charities[key]),
+            'description': "I don't feell like writing this",
+        } for key in raw_charities
+    ]
+    charities.sort(key=lambda x: x["votes"], reverse=True)
+
     _charities = json.dumps(charities)
     return flask.render_template(
         "voting.html",
@@ -15,5 +32,14 @@ def voting():
         _charities=_charities,
     )
 
-# need leaderobard on left side
-# options to vote now or view other charities to vote for
+@controller.route("/vote", methods=["POST"])
+def _vote():
+    form = flask.request.form
+
+    votedFor = form.get("selectedCharity") 
+    db_client = firebase.getDB()
+
+    if votedFor != None:
+        voting_db.increment_charity(db_client, votedFor)
+
+    return flask.redirect(flask.url_for("mod_voting.vote"))
