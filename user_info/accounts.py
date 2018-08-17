@@ -120,7 +120,24 @@ def delete_account(key, client):
     return;
 
 # gets account balance for either charity or checking
-def get_account_balance(key, client):
+def get_account_balance(key, account_id):
+    url = "http://api.reimaginebanking.com/accounts/" + account_id
+
+    querystring = {"key":key}
+
+    headers = {
+        'Content-Type': "application/json",
+        'Cache-Control': "no-cache",
+        'Postman-Token': "2adf0288-3d14-4b72-8cb8-fbd7abcb4d83"
+        }
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    response = json.loads(response.text)
+
+    return response["balance"];
+
+# gets account balance for either charity or checking
+def get_account_difference(key, client):
     url = "http://api.reimaginebanking.com/accounts/5b75bbddf0cec56abfa436a6"
 
     querystring = {"key":key}
@@ -144,13 +161,13 @@ def get_account_balance(key, client):
 
 # adds to charity balance
 def add_charity_balance(key, client):
-    amount = get_account_balance(key, client)
+    amount = get_account_difference(key, client)
 
     if (0.001 < amount and amount != 1.0):
         # withdraw money from main account
         withdraw_from_balance(key, amount, "5b75bbddf0cec56abfa436a6")
 
-        url = "http://api.reimaginebanking.com/accounts/5b75bbe6f0cec56abfa436a7/deposits"
+        url = "http://api.reimaginebanking.com/accounts/5b76712cf0cec56abfa437c1/deposits"
 
         querystring = {"key":key}
 
