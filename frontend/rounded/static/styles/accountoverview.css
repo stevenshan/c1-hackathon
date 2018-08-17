@@ -1,0 +1,43 @@
+.account-container {
+    display: flex;
+}
+
+.charity-banner {
+    height: 50px;
+    background-color: #d03027;
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+    box-sizing: border-box;
+    padding-right: 10px;
+    padding-left: 10px;
+    
+}
+
+.charity-banner a {
+    background-color: white;
+    color: black;
+    padding: 5px;
+    border-radius: 2px;
+}
+.account-card {
+    width: 50%;
+    height: 150px;
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    margin: 10px;
+
+    background: rgba(91,169,217,1);
+    background: -moz-linear-gradient(left, rgba(91,169,217,1) 0%, rgba(29,107,156,1) 19%, rgba(0,73,119,1) 47%, rgba(0,73,119,1) 74%, rgba(15,98,150,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(91,169,217,1)), color-stop(19%, rgba(29,107,156,1)), color-stop(47%, rgba(0,73,119,1)), color-stop(74%, rgba(0,73,119,1)), color-stop(100%, rgba(15,98,150,1)));
+    background: -webkit-linear-gradient(left, rgba(91,169,217,1) 0%, rgba(29,107,156,1) 19%, rgba(0,73,119,1) 47%, rgba(0,73,119,1) 74%, rgba(15,98,150,1) 100%);
+    background: -o-linear-gradient(left, rgba(91,169,217,1) 0%, rgba(29,107,156,1) 19%, rgba(0,73,119,1) 47%, rgba(0,73,119,1) 74%, rgba(15,98,150,1) 100%);
+    background: -ms-linear-gradient(left, rgba(91,169,217,1) 0%, rgba(29,107,156,1) 19%, rgba(0,73,119,1) 47%, rgba(0,73,119,1) 74%, rgba(15,98,150,1) 100%);
+    background: linear-gradient(to right, rgba(91,169,217,1) 0%, rgba(29,107,156,1) 19%, rgba(0,73,119,1) 47%, rgba(0,73,119,1) 74%, rgba(15,98,150,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5ba9d9', endColorstr='#0f6296', GradientType=1 );
+}
