@@ -47,13 +47,13 @@ def add_donation(user, charity_navigator_url):
 	r = AddPurchase(user, charity_navigator_url)
 	client.send(r)
 
-def get_recommendations(user):
+def get_recommendations(user, db):
 	recommended = client.send(RecommendItemsToUser(user, num_recs, min_relevance='medium'))
 	ids = []
 	for rec in recommended['recomms']:
 	 	ids.append(rec['id'])
 	recommended_list = ids
-	hard_coded_suggestions = access_suggestions()
+	hard_coded_suggestions = access_suggestions(db)
 	return (recommended_list, hard_coded_suggestions)
 
 def add_rejection(user, item):
@@ -72,19 +72,22 @@ def get_index_in_hard_coded_list(hard_coded_suggestions, item_id):
 	except ValueError:
 		return num_recs
 
-def sort_recommendations(user):
+def sort_recommendations(user, db):
 	get_dict()
-	(recommended_list, hard_coded_suggestions) = get_recommendations(user)
+	(recommended_list, hard_coded_suggestions) = get_recommendations(user, db)
 	sorted_list = sorted(recommended_list+hard_coded_suggestions, 
 		key = lambda item_id: (get_index_in_ML_list(recommended_list, item_id) + get_index_in_hard_coded_list(hard_coded_suggestions, item_id))/2, reverse=True)[:num_recs]
 	print(sorted_list)
 	return [{'charityName': all_charity_data[item_id]['charityName'], 'mission': all_charity_data[item_id]['mission']} 
-	for item_id in sorted_list 
-	if item_id in all_charity_data.keys()]
+		for item_id in sorted_list 
+		if item_id in all_charity_data.keys()]
 
+def write_final_rec(user):
+	db = connect_to_db()
+	rec_list = sort_recommendations(user, db)
+	write_current_suggestion(db, rec_list[0])
 
-
-print(sort_recommendations('user1'))
+write_final_rec('user1')
 
 
 
