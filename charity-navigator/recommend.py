@@ -84,7 +84,7 @@ def sort_recommendations(user):
 
 
 
-#print(sort_recommendations('user1'))
+print(sort_recommendations('user1'))
 
 
 

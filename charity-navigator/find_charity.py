@@ -196,7 +196,7 @@ def get_charity_name_and_url(charity_name):
 	return (result['charityName'], website)
 
 
-def get_location(charity_name):
+def get_charity_location(charity_name):
 	payload = {"app_id": app_id, "app_key": app_key, "search": charity_name, "searchType": "NAME_ONLY", "sort": "RELEVANCE"}
 	url = "https://api.data.charitynavigator.org/v2/Organizations"
 	r = requests.get(url, params=payload)
