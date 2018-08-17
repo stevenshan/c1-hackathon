@@ -41,6 +41,5 @@ rsa==3.4.2
 six==1.11.0
 SQLAlchemy==1.2.10
 tweepy==3.6.0
-ujson==1.35
 urllib3==1.23
 Werkzeug==0.14.1
