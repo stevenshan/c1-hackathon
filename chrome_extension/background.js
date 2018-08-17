@@ -1,9 +1,9 @@
 if (document.title == "Amazon.com Shopping Cart") {
 
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", "https://github.com", false ); // false for synchronous request
-    xmlHttp.send( null );
-    console.log("TESTx123");
+    //var xmlHttp = new XMLHttpRequest();
+    //xmlHttp.open( "GET", "https://github.com", false ); // false for synchronous request
+    //xmlHttp.send( null );
+    //console.log("TESTx123");
 
    var total = document.getElementsByClassName('a-size-medium a-color-price sc-price sc-white-space-nowrap sc-price-sign')[0].innerHTML;
    // total = total.getElementsByClassName('a-spacing-none a-spacing-top-mini')[0];
