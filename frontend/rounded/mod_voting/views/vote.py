@@ -17,7 +17,7 @@ def vote():
         return "Error retrieving charities: " + str(e)
 
     for charity in charities:
-        charity["description"] = redis.hget(charity["name"], "mission")
+        charity["description"] = redis.hget("charity:" + charity["name"], "mission")
 
     _charities = json.dumps(charities)
     return url_tools.render_template(
