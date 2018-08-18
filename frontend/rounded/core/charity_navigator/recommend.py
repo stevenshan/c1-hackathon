@@ -21,12 +21,13 @@ global all_charity_data
 # client.send(AddItemProperty('state', 'string'))
 
 def output_dict():
+	return 
+	
 	all_charity_data = output_all()
 	print('done getting charities')
 
 	db = connect_to_db()
 
-	url = "redis://h:p633e4fabfec649572dc5def69168418c21558611dc98ed1f1bf848198c5ba8b0@ec2-52-5-241-209.compute-1.amazonaws.com:15939"
 	db = redis.from_url(url)
 
 	data = {}
