@@ -19,7 +19,7 @@ def create_app():
         instance_relative_config=True
     )
 
-    GoogleMaps(app, key="AIzaSyADCxm6oxGCYP94Gq7igqtczUDycRvTbJU")
+    GoogleMaps(app, key=os.environ.get("GOOGLE_API_KEY"))
     
     # load configuration
     configMode = os.environ.get("app_configuration", "Config")

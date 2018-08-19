@@ -6,6 +6,8 @@ class Config:
     APP_NAME = "Rounded"
     SECRET_KEY = os.environ.get("SECRET_KEY")
 
+    GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+
     REDIS_URL = os.environ.get("REDIS_URL")
 
     CUSTOMER = "Jamey's Account"

@@ -7,6 +7,7 @@ from rounded.mod_voting.lib import db as topDB
 from rounded.core.user_info import accounts
 from flask import current_app as app
 import requests
+import os
 from multiprocessing import Pool
 
 TESTING = False
@@ -29,7 +30,7 @@ def userCharities():
 
 	if not TESTING:
 		try:
-			pool = Pool(processes=4)
+			pool = Pool(processes=2)
 			charitiesByLocation = find_charity.get_suggestions_by_city(client.city)
 			charityMarkers = pool.map(charityMarker, charitiesByLocation[:5],2)
 			charityMarkers = [x for x in charityMarkers if x != None]
@@ -74,17 +75,14 @@ def charityMarker(charity):
 
 def convertAddressToLatLong(address):
 	url = "https://maps.googleapis.com/maps/api/geocode/json"
-	googleApiKey = "AIzaSyAIVzJ6N9u3IVhFmdmQ8_TsoF7R2b0C088"
 
 	formattedAddress = address['streetAddress1'] + ', ' + address['city'] + ', ' + address['stateOrProvince']
-	querystring = {"address":formattedAddress, "key":googleApiKey}
-
-	headers = {
-        'Cache-Control': "no-cache",
-        'Postman-Token': "cbbebf39-ce47-4d89-9ee6-65a6a5049ba8"
+	querystring = {
+		"address": formattedAddress,
+		"key": os.environ.get("GOOGLE_API_KEY")
 	}
 
-	response = requests.request("GET", url, headers=headers, params=querystring)
+	response = requests.request("GET", url, params=querystring)
 	response = json.loads(response.text)
 	if len(response['results'])>0:
 		return response['results'][0]['geometry']['location'];
