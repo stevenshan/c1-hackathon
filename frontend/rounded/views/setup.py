@@ -1,13 +1,11 @@
 from . import controller
-from rounded.core import firebase
 import flask, json
-from rounded.core import charity_causes, url_tools
+from rounded.core import charity_causes, url_tools, firebase
 import base64
 
 @controller.route("/setup", methods=["GET"])
 def setup():
-    db = firebase.getDB()
-    interests = firebase.get_interests(db)
+    interests = firebase.get_interests()
     causes = [{
         "name": x,
         "value": base64.b64encode(x.encode("utf8")).decode("utf8"),
@@ -24,8 +22,6 @@ def _setup():
 
     causes = [decode(x) for x in causes]
 
-    db = firebase.getDB()
-
-    firebase.change_interests(db, causes)
+    firebase.change_interests(causes)
 
     return flask.redirect(flask.url_for("app.accountoverview"))

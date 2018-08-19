@@ -16,10 +16,16 @@ def init():
 def dbOperation(func):
     def _func(*argv, **kwargs):
         if db == None:
+            init()
+        if db == None:
             return None
         return func(*argv, **kwargs)
     _func.__name__ = func.__name__
     return _func
+
+@dbOperation
+def keys(pattern = None):
+    return db.keys(pattern)
 
 @dbOperation
 def set(key, value):
@@ -34,5 +40,13 @@ def hget(key, field):
     return db.hget(key, field)
 
 @dbOperation
+def hset(key, field, value):
+    return db.hset(key, field, value)
+
+@dbOperation
 def hgetall(key):
     return db.hgetall(key)
+
+@dbOperation
+def hincrby(key, field, amount = 1):
+    return db.hincrby(key, field, amount)

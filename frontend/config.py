@@ -9,6 +9,7 @@ class Config:
     REDIS_URL = os.environ.get("REDIS_URL")
 
     CUSTOMER = "Jamey's Account"
+    USER = "johnpaul"
 
     '''
     Database

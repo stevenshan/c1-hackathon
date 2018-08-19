@@ -1,9 +1,11 @@
-def _get_charities(db):
-    doc_ref = db.collection(u'charityOfTheWeek').document(u'charityVotes').get().to_dict()
+from rounded.core import redis
+
+def _get_charities():
+    doc_ref = redis.hgetall("charityVotes")
     return doc_ref
 
-def get_charities(db):
-    doc_ref = _get_charities(db)
+def get_charities():
+    doc_ref = _get_charities()
 
     # processs dictionary
     charities = [
@@ -17,23 +19,13 @@ def get_charities(db):
     charities.sort(key=lambda x: x["votes"], reverse=True)
     return charities
 
-def getTopCharity(db):
-    charities = get_charities(db)
+def getTopCharity():
+    charities = get_charities()
 
     if len(charities) == 0:
         return None
     return charities[0]
 
-def increment(db, charityUpdate):
-    data = charityUpdate
-    print(">>" + str(data))
-    #db.collection(u'users').document(u'{:}'.format(user)).document(u'suggestion').set(data)
-    user_ref = db.collection(u'charityOfTheWeek').document(u'charityVotes')
-    user_ref.update(data)
-
-# finds top suggestion and pushes to database
-def increment_charity(db, charityName):
-    charities = _get_charities(db)
-    updatedCharity = charities[charityName] + 1
-    charities[charityName] = updatedCharity
-    increment(db, charities)
+# increments number of votes charityName has
+def increment_charity(charityName):
+    redis.hincrby("charityVotes", charityName, 1)

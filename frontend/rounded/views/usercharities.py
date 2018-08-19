@@ -51,8 +51,7 @@ def userCharities():
 	except:
 		map = None
 
-	db = firebase.getDB()
-	topCharity = topDB.getTopCharity(db)
+	topCharity = topDB.getTopCharity()
 
 	return url_tools.render_template(
 		"usercharities.html",

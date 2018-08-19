@@ -4,8 +4,8 @@ from rounded.core import redis
 NAME = app.config.get("CUSTOMER")
 
 def setCharity(charityName):
-    redis.set("user:" + str(NAME), charityName)
+    redis.hset("user:" + str(NAME), "charity", charityName)
 
 def getCharity():
-    return redis.get("user:" + str(NAME))
+    return redis.hget("user:" + str(NAME), "charity")
 

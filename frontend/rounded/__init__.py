@@ -1,5 +1,5 @@
 from flask import Flask
-from rounded.core import firebase, redis
+from rounded.core import redis
 from flask_googlemaps import GoogleMaps
 
 # Database
@@ -31,7 +31,7 @@ def create_app():
         db.init_app(app)
         migrate = flask_migrate.Migrate(app, db)
 
-        firebase.connect()
+        # firebase.connect()
         redis.init()
 
         # default app related views

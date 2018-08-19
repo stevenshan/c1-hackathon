@@ -1,5 +1,4 @@
 from rounded.core.user_info import accounts
-from rounded.core import redis
 from flask import current_app as app
 
 API_KEY = "5843532b7d4678ebf648c08c09c61d81"
