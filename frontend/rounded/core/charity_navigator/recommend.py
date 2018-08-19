@@ -4,7 +4,7 @@ from recombee_api_client.api_requests import *
 from .find_charity import *
 from .user_data import *
 import json
-import redis
+from rounded.core import redis
 from .. import firebase 
 import os
 
@@ -47,14 +47,40 @@ global all_charity_data
 
 def get_dict():
 	global all_charity_data
-	path = os.path.join(
-    	os.getcwd(),
-    	os.path.dirname(__file__),
-        'data.json'
-    )
-	with open(path, 'r') as infile:
-		all_charity_data = json.load(infile)
+	# path = os.path.join(
+ #    	os.getcwd(),
+ #    	os.path.dirname(__file__),
+ #        'data.json'
+ #    )
 
+	# with open(path, 'r') as infile:
+	# 	all_charity_data = json.load(infile)
+
+	class redisJSON:
+		def __getitem__(self, field):
+			key = redis.hget("idMap", field)
+
+			if key == None:
+				return None
+
+			return redis.hgetall(key)
+
+		def __iter__(self):
+			self._iterator = (0, self.keys())
+			return self
+
+		def __next__(self):
+			index, keys = self._iterator
+			if index < len(keys):
+				index += 1
+				return keys[index]
+			else:
+				raise StopIteration
+
+		def keys(self):
+			return redis.hkeys("idMap")
+
+	all_charity_data = redisJSON()
 
 def add_items():
 	results = client.send(ListItems())

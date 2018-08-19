@@ -50,3 +50,7 @@ def hgetall(key):
 @dbOperation
 def hincrby(key, field, amount = 1):
     return db.hincrby(key, field, amount)
+
+@dbOperation
+def hkeys(key):
+    return db.hkeys(key)
