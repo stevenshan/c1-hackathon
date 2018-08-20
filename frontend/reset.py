@@ -1,3 +1,7 @@
+'''
+loads information in redis database and makes sure nessie capital one api is setup
+'''
+
 import rounded
 import redis
 import json

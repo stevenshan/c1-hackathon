@@ -20,10 +20,9 @@ def userCharities():
 		user.setCharity(str(charityChoice))
 		return flask.redirect(flask.url_for("app.userCharities"))
 
-	API_key = "5843532b7d4678ebf648c08c09c61d81"
-	customers = accounts.get_customers(API_key)
+	customers = accounts.get_customers()
 	customers_id = accounts.get_customers_id(customers, app.config.get("CUSTOMER"))
-	client = accounts.make_client(API_key, customers_id)
+	client = accounts.make_client(customers_id)
 
 	charityMarkers = []
 	charities = []

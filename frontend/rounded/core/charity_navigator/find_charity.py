@@ -5,7 +5,7 @@ import sys
 from dicttoxml import dicttoxml
 from flask import current_app as app
 sys.path.append("../")
-from user_info.accounts import *
+from rounded.core.user_info.accounts import *
 import pickle
 
 global my_zip_code
@@ -75,8 +75,7 @@ def get_location():
 	global my_city
 	global my_state
 
-	nessie_API_key = "5843532b7d4678ebf648c08c09c61d81"
-	customers = get_customers(nessie_API_key)
+	customers = get_customers()
 	customers_id = get_customers_id(customers, app.config.get("CUSTOMER"))
 	client = make_client(nessie_API_key, customers_id)
 

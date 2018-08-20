@@ -3,10 +3,6 @@ import flask
 from rounded.core.user_info import get as BANK
 from rounded.core import url_tools
 
-# this will be filtered out later if needed
-accounts = ["Venture One",
-'Essential Checking', "kill me"]
-
 @controller.route("/account-overview", methods=["GET"])
 def accountoverview():
     BANK.refresh()
