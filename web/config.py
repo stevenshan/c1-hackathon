@@ -10,8 +10,8 @@ class Config:
     REDIS_URL = os.environ.get("REDIS_URL")
 
     # capital one nessie api for bank transactions
-    # NESSIE_KEY = os.environ.get("NESSIE_KEY")
-    NESSIE_KEY = "5843532b7d4678ebf648c08c09c61d81"
+    NESSIE_KEY = os.environ.get("NESSIE_KEY")
+    # NESSIE_KEY = "5843532b7d4678ebf648c08c09c61d81"
 
     CUSTOMER = "Jamey's Account"
     USER = "johnpaul"
