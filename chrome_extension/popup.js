@@ -25,7 +25,7 @@ window.onload = () => {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open(
         "GET",
-        "https://request-redirect.herokuapp.com/data",
+        "https://rounded-capital-one-hackathon.herokuapp.com/data",
         false
     );
     xmlHttp.send( null );
