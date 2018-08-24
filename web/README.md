@@ -1,1 +1,2 @@
-initial commit
+- environmental variables must all be populated like in example `env.sh.example`
+- run `reset.py` to reset redis database and nessie accounts
