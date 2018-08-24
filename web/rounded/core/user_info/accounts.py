@@ -71,7 +71,9 @@ def make_client(customer_id):
 
 # gets customer accounts
 def get_customers_accounts(client):
-    url = "http://api.reimaginebanking.com/customers/" + client.id + "/accounts"
+    url = ("http://api.reimaginebanking.com/customers/" +
+           get_first_customer() +
+           "/accounts")
 
     querystring = {"key":key}
 
@@ -81,20 +83,120 @@ def get_customers_accounts(client):
 
     return customer_accounts
 
-# adds charity account
-def add_account(client):
-    url = "http://api.reimaginebanking.com/customers/" + client.id + "/accounts"
+def get_accounts():
+    return get_customers_accounts(None)
+
+def get_charity_account_id():
+    try:
+        accounts = get_accounts()
+        for account in accounts:
+            if account.get("nickname") == "Charity Account":
+                return account.get("_id")
+    except TypeError as e:
+        return None
+
+def get_checking_account_id():
+    try:
+        accounts = get_accounts()
+        for account in accounts:
+            if (account.get("type") == "Checking" and 
+                account.get("nickname") != "Charity Account"):
+                return account.get("_id")
+    except TypeError:
+        return None
+
+def get_first_customer(attempt = 0):
+    url = "http://api.reimaginebanking.com/customers"
 
     querystring = {"key":key}
 
-    payload = "{\n  \"type\": \"Checking\",\n  \"nickname\": \"Charity Account\",\n  \"rewards\": 0,\n  \"balance\": 0,\n  \"account_number\": \"8888888888888888\"\n}"
+    response = requests.request("GET", url, params=querystring)
+    response = json.loads(response.text)
+
+    if isinstance(response, list) and len(response) > 0:
+        return response[0]["_id"]
+    elif attempt >= 1:
+        return None
+
+    try:
+        create_customer()
+        get_first_customer(attempt + 1)
+    except:
+        return None
+
+def create_customer():
+    data = {
+        "first_name": "test",
+        "last_name": "customer",
+        "address": {
+            "street_number": "123",
+            "street_name": "street",
+            "city": "capital",
+            "state": "one",
+            "zip": "12345"
+        }
+    }
+
+    payload = json.dumps(data)
+    headers = {
+        'Content-Type': "application/json",
+    }
+
+    url = ("http://api.reimaginebanking.com/customers/")
+    account = requests.request("POST", url, data=payload, headers=headers, params=querystring)
+
+# adds charity account
+def add_charity_account():
+    if get_charity_account_id() != None:
+        return
+
+    url = ("http://api.reimaginebanking.com/customers/" +
+           get_first_customer() +
+           "/accounts")
+
+    querystring = {"key":key}
+
+    payload = {
+        'type': 'Checking',
+        'nickname': 'Charity Account',
+        'rewards': 0,
+        'balance': 0,
+        'account_number': '8888888888888888'
+    }
+    payload = json.dumps(payload)
     headers = {
         'Content-Type': "application/json",
     }
 
     account = requests.request("POST", url, data=payload, headers=headers, params=querystring)
     account = json.loads(account.text)
-    client.charity_account_id = account["objectCreated"]["_id"]
+
+    return
+
+# adds charity account
+def add_checking_account():
+    if get_checking_account_id() != None:
+        return
+        
+    url = ("http://api.reimaginebanking.com/customers/" +
+           get_first_customer() +
+           "/accounts")
+
+    querystring = {"key":key}
+
+    payload = {
+        'type': 'Checking',
+        'nickname': app.config.get("CUSTOMER"),
+        'rewards': 0,
+        'balance': 10000,
+        'account_number': '1111888888888888'
+    }
+    payload = json.dumps(payload)
+    headers = {
+        'Content-Type': "application/json",
+    }
+
+    account = requests.request("POST", url, data=payload, headers=headers, params=querystring)
 
     return
 
@@ -112,23 +214,6 @@ def delete_account(client):
     response = requests.request("DELETE", url, headers=headers, data=payload, params=querystring)
 
     return
-
-def get_accounts():
-    client = get_client()
-    return get_customers_accounts(client)
-
-def get_charity_account_id():
-    accounts = get_accounts()
-    for account in accounts:
-        if account.get("nickname") == "Charity Account":
-            return account.get("_id")
-
-def get_checking_account_id():
-    accounts = get_accounts()
-    for account in accounts:
-        if (account.get("type") == "Checking" and 
-            account.get("nickname") != "Charity Account"):
-            return account.get("_id")
 
 # gets account balance for either charity or checking
 def get_account_balance(account_id):
@@ -219,4 +304,20 @@ def make_payment(amount):
     
     response = requests.request("POST", url, headers=headers, data=payload, params=querystring)
 
+def reset_accounts():
+    def _delete(_id):
+        url = ("http://api.reimaginebanking.com/accounts/" + _id)
+        querystring = {"key":key}
+        response = requests.request("DELETE", url, params=querystring)
 
+    try:
+        id = get_checking_account_id()
+        _delete(id)
+    except Exception as e:
+        pass
+
+    try:
+        id = get_charity_account_id()
+        _delete(id)
+    except Exception as e:
+        pass

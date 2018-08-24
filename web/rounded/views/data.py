@@ -1,7 +1,6 @@
 from . import controller
 from rounded.core import url_tools, user
 import flask
-from rounded.core.user_info import get as BANK
 from rounded.core.user_info import accounts
 
 @controller.route("/pay", methods=["GET"])
@@ -23,6 +22,7 @@ def transfer():
 
 @controller.route("/data", methods=["GET"])
 def datamessage():
+    from rounded.core.user_info import get as BANK
     BANK.refresh()
     accounts = BANK.ACCOUNTS
     balance = "0.00"
