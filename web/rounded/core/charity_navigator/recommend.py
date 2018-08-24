@@ -7,12 +7,12 @@ import json
 from rounded.core import redis
 from .. import firebase 
 import os
+from flask import current_app as app
 
 num_recs = 10
 user = 'user1'
-db_name = "team-2"
-secret_token = "SFgtcueq51BZqYNKN8QMm9HuuWCN0lPOtUTZpwjg8uquAQ1ggzLtrEMaBceN9AD9"
-client = RecombeeClient(db_name, secret_token)
+
+client = RecombeeClient(*app.config.get("RECOMBEE"))
 
 global all_charity_data
 

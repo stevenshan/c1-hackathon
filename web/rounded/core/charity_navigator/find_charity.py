@@ -6,14 +6,15 @@ from dicttoxml import dicttoxml
 from flask import current_app as app
 sys.path.append("../")
 from rounded.core.user_info.accounts import *
+from flask import current_app as app
 import pickle
 
 global my_zip_code
 global my_city
 global my_state
-app_id = "267c5c0d"
-app_key = "95a6143616abcad971c5966409b0cb52"
 
+app_id = app.config.get("CHARITY_NAVIGATOR")["app"]
+app_key = app.config.get("CHARITY_NAVIGATOR")["key"]
 
 def state_name_to_postal_code(state):
 	state_dict = {
@@ -77,7 +78,7 @@ def get_location():
 
 	customers = get_customers()
 	customers_id = get_customers_id(customers, app.config.get("CUSTOMER"))
-	client = make_client(nessie_API_key, customers_id)
+	client = make_client(customers_id)
 
 	my_zip_code = client.zip
 	my_city = client.city

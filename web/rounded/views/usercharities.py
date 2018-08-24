@@ -36,6 +36,8 @@ def userCharities():
 			charities = recommend.write_final_rec('user1')
 		except Exception as e:
 			print("SKIPPED")
+			import traceback
+			traceback.print_exc()
 			print(e)
 			pass
 	try:

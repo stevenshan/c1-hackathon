@@ -15,6 +15,25 @@ class Config:
     CUSTOMER = "Jamey's Account"
     USER = "johnpaul"
 
+    TWITTER = {
+        "consumer_key": os.environ.get("TWITTER_CONSUMER_KEY"),
+        "consumer_secret": os.environ.get("TWITTER_CONSUMER_SECRET"),
+        "access_token": os.environ.get("TWITTER_ACCESS_TOKEN"),
+        "access_token_secret": os.environ.get("TWITTER_TOKEN_SECRET"),
+    }
+
+    RECOMBEE = (
+        # database name
+        os.environ.get("RECOMBEE_DB_NAME"),
+        # secret token
+        os.environ.get("RECOMBEE_SECRET_KEY"),
+    )
+
+    CHARITY_NAVIGATOR = {
+        "app": os.environ.get("CHARITY_NAVIGATOR_APP"),
+        "key": os.environ.get("CHARITY_NAVIGATOR_KEY"),
+    }
+
     '''
     Database
     '''
